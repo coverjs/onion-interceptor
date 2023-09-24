@@ -172,6 +172,8 @@ export class OnionInterceptor<Ctx = any> {
   }
 }
 
+// @TIPS 虚拟手机号平台 https://sms-activate.org/cn
+
 // @TODO 针对 GPT 建议修改
 // @TODO 上单元测试
 // @TODO 整理目录结构划分
