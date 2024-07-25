@@ -1,64 +1,43 @@
-export type Middleware<Ctx = any> = (ctx: Ctx, next: Next) => Promise<void>
-type Next = (...args: Opeartion[]) => Promise<void>
-
-export interface MiddlewareKlass<T = any> {
-  intercept: Middleware<T>
-}
-
-interface MiddlewareKlassConstructor<T> {
-  new (): MiddlewareKlass<T>
-}
-
-const isOpeartionKey = Symbol('__is_Opeartion')
-export interface Opeartion extends Middleware {
-  [isOpeartionKey]: boolean
-}
-
-const isFunction = (val: unknown): val is Function => typeof val === 'function'
-
-/**
- * Determines whether it is an operator.
- * @param val
- */
-const isOperation = (val: unknown): val is Function & Opeartion =>
-  isFunction(val) && (val as Opeartion)[isOpeartionKey] === true
+import type { Opeartion, Middleware, Next, MiddlewareKlassConstructor } from './types'
+import { isOpeartionKey } from './constants'
+import { isFunction, isOperation } from './is'
 
 const nextPKey = Symbol('nextP')
 const handleMap: WeakMap<MiddlewareLinkNode, Middleware> = new WeakMap()
 class MiddlewareLinkNode<Ctx = any> {
   private [nextPKey]: MiddlewareLinkNode<Ctx> | null = null
-  constructor (handle?: Middleware<Ctx>) {
+  constructor(handle?: Middleware<Ctx>) {
     isFunction(handle) && handleMap.set(this, handle)
   }
 
-  getNext () {
+  getNext() {
     return this[nextPKey]
   }
-  setNext (node: MiddlewareLinkNode<Ctx>) {
+  setNext(node: MiddlewareLinkNode<Ctx>) {
     this[nextPKey] = node
   }
-  hasNext () {
+  hasNext() {
     return this[nextPKey] != null
   }
 
-  isNil () {
+  isNil() {
     return handleMap.get(this) == null
   }
-  isHandleAs (fn: Function) {
+  isHandleAs(fn: Function) {
     return handleMap.get(this) === fn
   }
-  isOperation () {
+  isOperation() {
     return isOperation(handleMap.get(this))
   }
 
-  bind (ctx: Ctx, next: Next) {
+  bind(ctx: Ctx, next: Next) {
     return !this.isNil() ? handleMap.get(this)!.bind(null, ctx, next) : () => void 0
   }
-  call (ctx: Ctx, next: Next) {
+  call(ctx: Ctx, next: Next) {
     if (!this.isNil()) return handleMap.get(this)!.call(null, ctx, next)
   }
 
-  destroy () {
+  destroy() {
     handleMap.delete(this)
   }
 }
@@ -67,7 +46,7 @@ class MiddlewareLinkNode<Ctx = any> {
  * Generate Operator
  * @param fn
  */
-export function operate (fn: Middleware) {
+export function operate(fn: Middleware) {
   if (!isFunction(fn)) throw new TypeError('operate must be a function!')
   ;(fn as Opeartion)[isOpeartionKey] = true
   return fn as Opeartion
@@ -77,7 +56,7 @@ export function operate (fn: Middleware) {
  * Get operator pipe from argument list
  * @param args
  */
-function pipeFromArgs<T> (args: unknown[]) {
+function pipeFromArgs<T>(args: unknown[]) {
   const head = new MiddlewareLinkNode<T>()
   let tail = head
   for (let item of args)
@@ -94,7 +73,7 @@ function pipeFromArgs<T> (args: unknown[]) {
  * @param context
  * @param core
  */
-function compose<Ctx> (root: MiddlewareLinkNode<Ctx>, ctx: Ctx, coreFn: Function) {
+function compose<Ctx>(root: MiddlewareLinkNode<Ctx>, ctx: Ctx, coreFn: Function) {
   const visitedNodes: Set<MiddlewareLinkNode<Ctx>> = new Set()
 
   const dispatch = (node: MiddlewareLinkNode<Ctx>, ...args: Middleware<Ctx>[]): Promise<void> => {
@@ -121,11 +100,11 @@ function compose<Ctx> (root: MiddlewareLinkNode<Ctx>, ctx: Ctx, coreFn: Function
   return dispatch(root)
 }
 
-function destroyFreeNode (node: MiddlewareLinkNode, coreFn: Function) {
+function destroyFreeNode(node: MiddlewareLinkNode, coreFn: Function) {
   if (node?.isNil() || node?.isHandleAs(coreFn) || node?.isOperation()) node?.destroy()
 }
 
-function tryInstantiationMiddleware<T> (middleware: Middleware<T> | MiddlewareKlassConstructor<T>) {
+function tryInstantiationMiddleware<T>(middleware: Middleware<T> | MiddlewareKlassConstructor<T>) {
   let result = middleware
   try {
     const klassMiddlewareIns = new (middleware as MiddlewareKlassConstructor<T>)()
@@ -141,7 +120,7 @@ const headMap: WeakMap<OnionInterceptor, MiddlewareLinkNode> = new WeakMap()
 const tailMap: WeakMap<OnionInterceptor, MiddlewareLinkNode> = new WeakMap()
 
 export class OnionInterceptor<Ctx = any> {
-  constructor () {
+  constructor() {
     headMap.set(this, new MiddlewareLinkNode<Ctx>(async (_, next) => await next())) // The handler function in the first node is used if use() is never used.
     tailMap.set(this, headMap.get(this) as MiddlewareLinkNode<Ctx>)
   }
@@ -150,7 +129,7 @@ export class OnionInterceptor<Ctx = any> {
    * Adding Middleware to the Interceptor Instance
    * @param middleware
    */
-  public use (middleware: Middleware<Ctx> | MiddlewareKlassConstructor<Ctx>) {
+  public use(middleware: Middleware<Ctx> | MiddlewareKlassConstructor<Ctx>) {
     const fn = tryInstantiationMiddleware<Ctx>(middleware)
     if (!isFunction(fn)) throw new TypeError('middleware or intercept must be a function!')
     tailMap.get(this)?.setNext(new MiddlewareLinkNode<Ctx>(fn))
@@ -163,7 +142,7 @@ export class OnionInterceptor<Ctx = any> {
    * @param ctx
    * @param coreFn
    */
-  public handle (ctx: Ctx, coreFn: Function) {
+  public handle(ctx: Ctx, coreFn: Function) {
     return compose<Ctx>(
       headMap.get(this)?.getNext() ?? (headMap.get(this) as MiddlewareLinkNode<Ctx>),
       ctx,
@@ -171,10 +150,3 @@ export class OnionInterceptor<Ctx = any> {
     )
   }
 }
-
-// @TIPS 虚拟手机号平台 https://sms-activate.org/cn
-
-// @TODO 针对 GPT 建议修改
-// @TODO 上单元测试
-// @TODO 整理目录结构划分
-

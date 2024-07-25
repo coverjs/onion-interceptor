@@ -27,11 +27,6 @@
     "declarationDir": "dist/types",
     "outDir": "dist/lib",
     "typeRoots": ["node_modules/@types"],
-
-    "baseUrl": ".",
-    "paths": {
-      "@/*": ["./src/*"]
-    }
   },
-  "include": ["src"]
+  "include": ["packages/**/*.ts"]
 }

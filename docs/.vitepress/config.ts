@@ -2,8 +2,8 @@ import { defineConfig } from 'vitepress'
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
-  title: "ts-lib",
-  description: "a ts-lib develp with typescript",
+  title: "onion-interceptor",
+  description: "通用网络请求拦截器工具",
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     nav: [
