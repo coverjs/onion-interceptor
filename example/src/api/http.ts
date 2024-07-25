@@ -2,10 +2,10 @@ import { OnionInterceptor } from 'onion-interceptor'
 
 import { interceptors } from '../interceptor'
 import axios, { AxiosInstance, AxiosRequestConfig } from 'axios'
+// import { resolve } from 'path'
 
 export class Http {
   private instance: AxiosInstance
-  private ctx: any
   private interceptor: OnionInterceptor
   constructor() {
     this.instance = axios.create({
@@ -15,24 +15,14 @@ export class Http {
         'Content-Type': 'application/json'
       }
     })
-    this.interceptor = new OnionInterceptor()
-    interceptors.forEach((item) => this.interceptor.use(item))
+    this.interceptor = new OnionInterceptor(this.instance)
+    // interceptors.forEach((item) => this.interceptor.use(item))
+    this.interceptor.use(...interceptors)
   }
   request<T = any>(config: AxiosRequestConfig): Promise<T> {
-    this.ctx = { config }
-
-    return new Promise<T>((resolve, reject) => {
-      this.interceptor.handle(this.ctx, async () => {
-        await this.instance
-          .request(config)
-          .then((res) => {
-            this.ctx.res = res
-            console.log(res)
-            resolve(res as unknown as Promise<T>)
-          })
-          .catch((err) => {
-            reject(err)
-          })
+    return new Promise<T>((resolve) => {
+      this.instance.request<T>(config).then((res) => {
+        resolve(res.data)
       })
     })
   }

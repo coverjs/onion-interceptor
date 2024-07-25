@@ -1,6 +1,12 @@
 import type { Next } from 'onion-interceptor'
 export async function errorInterceptor(ctx: any, next: Next) {
   console.log('errorInterceptor start', ctx)
-  await next()
-  console.log('errorInterceptor end', ctx)
+  try {
+    await next()
+  } catch (error) {
+    console.log(error)
+    throw Promise.reject(error)
+  } finally {
+    console.log('errorInterceptor end', ctx)
+  }
 }

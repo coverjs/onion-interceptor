@@ -9,3 +9,5 @@ export const isFunction = (val: unknown): val is Function => typeof val === 'fun
  */
 export const isOperation = (val: unknown): val is Function & Opeartion =>
   isFunction(val) && (val as Opeartion)[isOpeartionKey] === true
+
+export const isNil = (val: unknown): val is null | undefined => val == null

@@ -1,6 +1,6 @@
 import type { Opeartion, Middleware, Next, MiddlewareKlassConstructor } from './types'
 import { isOpeartionKey } from './constants'
-import { isFunction, isOperation } from './is'
+import { isFunction, isOperation, isNil } from './is'
 
 const nextPKey = Symbol('nextP')
 const handleMap: WeakMap<MiddlewareLinkNode, Middleware> = new WeakMap()
@@ -119,21 +119,49 @@ function tryInstantiationMiddleware<T>(middleware: Middleware<T> | MiddlewareKla
 const headMap: WeakMap<OnionInterceptor, MiddlewareLinkNode> = new WeakMap()
 const tailMap: WeakMap<OnionInterceptor, MiddlewareLinkNode> = new WeakMap()
 
+interface AxiosInstanceLike {
+  request: Function
+}
+
 export class OnionInterceptor<Ctx = any> {
-  constructor() {
+  constructor(instance?: AxiosInstanceLike) {
     headMap.set(this, new MiddlewareLinkNode<Ctx>(async (_, next) => await next())) // The handler function in the first node is used if use() is never used.
     tailMap.set(this, headMap.get(this) as MiddlewareLinkNode<Ctx>)
+
+    if (!isNil(instance?.request) && isFunction(instance?.request))
+      this.rewriteAxiosRequest(instance!)
+  }
+
+  rewriteAxiosRequest(instance: AxiosInstanceLike) {
+    const original = instance.request
+    const self = this
+    instance.request = function request<T = any>(config: unknown) {
+      const ctx = { config } as any
+      return new Promise<T>((resolve) => {
+        self.handle(ctx, async (_: Ctx, next: Function) => {
+          await original
+            .apply(this, arguments)
+            .then((res) => {
+              ctx.res = res
+              resolve(res as unknown as Promise<T>)
+            })
+            .finally(() => next())
+        })
+      })
+    }
   }
 
   /**
    * Adding Middleware to the Interceptor Instance
    * @param middleware
    */
-  public use(middleware: Middleware<Ctx> | MiddlewareKlassConstructor<Ctx>) {
-    const fn = tryInstantiationMiddleware<Ctx>(middleware)
-    if (!isFunction(fn)) throw new TypeError('middleware or intercept must be a function!')
-    tailMap.get(this)?.setNext(new MiddlewareLinkNode<Ctx>(fn))
-    tailMap.set(this, tailMap.get(this)?.getNext() as MiddlewareLinkNode<Ctx>)
+  public use(...args: Array<Middleware<Ctx> | MiddlewareKlassConstructor<Ctx>>) {
+    args.forEach((middleware) => {
+      const fn = tryInstantiationMiddleware<Ctx>(middleware)
+      if (!isFunction(fn)) throw new TypeError('middleware or intercept must be a function!')
+      tailMap.get(this)?.setNext(new MiddlewareLinkNode<Ctx>(fn))
+      tailMap.set(this, tailMap.get(this)?.getNext() as MiddlewareLinkNode<Ctx>)
+    })
     return this
   }
 
