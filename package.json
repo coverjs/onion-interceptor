@@ -6,17 +6,10 @@
   "scripts": {
     "dev": "vite serve example",
     "lint": "tslint --project tsconfig.json -t codeFrame 'src/**/*.ts' 'test/**/*.ts'",
-    "prebuild": "rimraf dist",
-    "build": "tsc --module commonjs && vite build",
-    "test": "vitest --coverage --run",
-    "test:watch": "vitest --coverage",
-    "test:prod": "npm run lint && vitest --coverage --run",
     "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs",
     "docs:preview": "vitepress preview docs",
-    "commit": "git-cz",
-    "prepub": "npm run test:prod && npm run build",
-    "pub": "sh release.sh"
+    "commit": "git-cz"
   },
   "config": {
     "commitizen": {
