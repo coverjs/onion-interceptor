@@ -4,12 +4,11 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "dev": "vite serve example",
-    "lint": "tslint --project tsconfig.json -t codeFrame 'src/**/*.ts' 'test/**/*.ts'",
+    "dev": "pnpm --filter @onion-interceptor/example dev",
+    "build": "pnpm --filter onion-interceptor build",
     "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs",
-    "docs:preview": "vitepress preview docs",
-    "commit": "git-cz"
+    "docs:preview": "vitepress preview docs"
   },
   "config": {
     "commitizen": {
