@@ -1,4 +1,4 @@
-import { OnionInterceptor, type Next } from 'onion-interceptor'
+import { OnionInterceptor } from 'onion-interceptor'
 
 import { interceptors } from '../interceptor'
 import axios, { AxiosInstance, AxiosRequestConfig } from 'axios'
@@ -22,14 +22,13 @@ export class Http {
     this.ctx = { config }
 
     return new Promise<T>((resolve, reject) => {
-      this.interceptor.handle(this.ctx, async (_: unknown, next: Function) => {
+      this.interceptor.handle(this.ctx, async () => {
         await this.instance
           .request(config)
-          .then(async (res) => {
+          .then((res) => {
             this.ctx.res = res
             console.log(res)
             resolve(res as unknown as Promise<T>)
-            next(res)
           })
           .catch((err) => {
             reject(err)
