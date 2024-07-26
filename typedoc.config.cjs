@@ -2,7 +2,7 @@
 module.exports = {
   entryPoints: ['./packages/core/src/index.ts'],
   out: 'docs/src',
-  plugin: ['typedoc-plugin-markdown', './docs/.vitepress/theme/typedoc-theme.mjs'],
+  plugin: ['typedoc-plugin-markdown', './docs/.vitepress/theme/typedoc-theme.js'],
   theme: 'themeExpand',
   hideBreadcrumbs: true,
   parametersFormat: 'table',

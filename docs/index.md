@@ -11,10 +11,7 @@ hero:
     alt: Coverjs Logo
   actions:
     - theme: brand
-      text: 指南
+      text: 快速开始
       link: /src/README
-    - theme: alt
-      text: 文档快览
-      link: /src/globals
 ---
 

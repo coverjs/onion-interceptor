@@ -33,7 +33,7 @@
 
 #### 查看源码
 
-[index.ts:184](https://github.com/coverjs/onion-interceptor/blob/1b9d5ae9aaa61676e78600fa57f48aeebb868b75/packages/core/src/index.ts#L184)
+[index.ts:184](https://github.com/coverjs/onion-interceptor/blob/594421c31ed42493b820500a185c38febcee0b53/packages/core/src/index.ts#L184)
 
 ## Methods
 
@@ -56,7 +56,7 @@ Use the onion interceptor to intercept the target function.
 
 #### 查看源码
 
-[index.ts:215](https://github.com/coverjs/onion-interceptor/blob/1b9d5ae9aaa61676e78600fa57f48aeebb868b75/packages/core/src/index.ts#L215)
+[index.ts:215](https://github.com/coverjs/onion-interceptor/blob/594421c31ed42493b820500a185c38febcee0b53/packages/core/src/index.ts#L215)
 
 ***
 
@@ -78,4 +78,4 @@ Adding Middleware to the Interceptor Instance
 
 #### 查看源码
 
-[index.ts:200](https://github.com/coverjs/onion-interceptor/blob/1b9d5ae9aaa61676e78600fa57f48aeebb868b75/packages/core/src/index.ts#L200)
+[index.ts:200](https://github.com/coverjs/onion-interceptor/blob/594421c31ed42493b820500a185c38febcee0b53/packages/core/src/index.ts#L200)

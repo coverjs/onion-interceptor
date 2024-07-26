@@ -23,7 +23,7 @@
 
 ## 查看源码
 
-[types.ts:6](https://github.com/coverjs/onion-interceptor/blob/1b9d5ae9aaa61676e78600fa57f48aeebb868b75/packages/core/src/types.ts#L6)
+[types.ts:6](https://github.com/coverjs/onion-interceptor/blob/594421c31ed42493b820500a185c38febcee0b53/packages/core/src/types.ts#L6)
 
 ## Properties
 
@@ -33,4 +33,4 @@
 
 #### 查看源码
 
-[types.ts:7](https://github.com/coverjs/onion-interceptor/blob/1b9d5ae9aaa61676e78600fa57f48aeebb868b75/packages/core/src/types.ts#L7)
+[types.ts:7](https://github.com/coverjs/onion-interceptor/blob/594421c31ed42493b820500a185c38febcee0b53/packages/core/src/types.ts#L7)

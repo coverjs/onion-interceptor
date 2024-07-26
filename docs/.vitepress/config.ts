@@ -11,10 +11,24 @@ export default defineConfig({
     // https://vitepress.dev/reference/default-theme-config
     logo: '/logo.png',
     sidebar: {
+      '/src/README': [{ text: '快速上手', link: '/src/README' }],
       '/src/': navigation
     },
-    nav: [{ text: 'Home', link: '/' }],
+    nav: [
+      {
+        text: '文档',
+        items: [
+          { text: '指南', link: '/src/README' },
+          { text: 'API', link: '/src/globals' }
+        ]
+      }
+    ],
 
-    socialLinks: [{ icon: 'github', link: 'https://github.com/coverjs/onion-interceptor' }]
+    socialLinks: [{ icon: 'github', link: 'https://github.com/coverjs/onion-interceptor' }],
+
+    footer: {
+      message: 'Released under the MIT License.',
+      copyright: 'Copyright © 2024-present EricWXY'
+    }
   }
 })
