@@ -9,7 +9,12 @@ export default {
       loadOml2d({
         models: [
           {
-            path: 'https://cdn.jsdelivr.net/gh/Eikanya/Live2d-model/Live2D/Senko_Normals/senko.model3.json'
+            path: 'https://model.oml2d.com/cat-black/model.json',
+            scale: 0.15,
+            position: [0, 20],
+            stageStyle: {
+              height: 350
+            }
           }
         ]
       })

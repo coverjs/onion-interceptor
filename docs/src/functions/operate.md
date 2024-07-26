@@ -20,4 +20,4 @@ Generate Operator
 
 ## 查看源码
 
-[index.ts:55](https://github.com/coverjs/onion-interceptor/blob/d78f7a0ebce89e605082747d9c7461d8b8bdb161/packages/core/src/index.ts#L55)
+[index.ts:55](https://github.com/coverjs/onion-interceptor/blob/1b9d5ae9aaa61676e78600fa57f48aeebb868b75/packages/core/src/index.ts#L55)
