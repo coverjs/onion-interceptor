@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { Http } from './api/http'
+import { http } from './api/http'
 import { onMounted } from 'vue'
 
-const http = new Http()
+// const http = new XAxios()
 
 onMounted(() => {
-  http.get({ url: '/users' }).then((res) => {
+  http.get('/users').then((res) => {
     console.log(res)
   })
 })

@@ -1,6 +1,12 @@
-import type { Opeartion, Middleware, Next, MiddlewareKlassConstructor } from './types'
+import type {
+  Opeartion,
+  Middleware,
+  Next,
+  MiddlewareKlassConstructor,
+  AxiosInstanceLike
+} from './types'
 import { isOpeartionKey } from './constants'
-import { isFunction, isOperation, isNil } from './is'
+import { isFunction, isOperation, isNil, isAxiosInstanceLike } from './is'
 
 const nextPKey = Symbol('nextP')
 const handleMap: WeakMap<MiddlewareLinkNode, Middleware> = new WeakMap()
@@ -116,39 +122,67 @@ function tryInstantiationMiddleware<T>(middleware: Middleware<T> | MiddlewareKla
   return result as Middleware<T>
 }
 
+function rewriteRequest(instance: AxiosInstanceLike, interceptor: OnionInterceptor) {
+  interface Ctx<T> {
+    cfg: any
+    args: Array<any>
+    res?: T | Promise<T>
+  }
+  const original = instance.request
+  instance.request = async function request<T = any>() {
+    const args = Array.prototype.slice.call(arguments)
+    const ctx: Ctx<T> = { args, cfg: instance.defaults }
+    return await interceptor.handle(
+      ctx,
+      async (_ctx: Ctx<T>, next: Next) =>
+        await original
+          .apply(this, args)
+          .then((res) => {
+            _ctx.res = res
+            return res as T | PromiseLike<T>
+          })
+          .finally(() => next())
+    )
+  }
+  ;['delete', 'get', 'head', 'options'].forEach((method) => {
+    instance[method] = function (url, config) {
+      return instance.request({ url, method, ...config })
+    }
+  })
+  ;['post', 'put', 'patch'].forEach((method) => {
+    instance[method] = function (url, data, config) {
+      return instance.request({ url, data, method, ...config })
+    }
+  })
+  ;['postForm', 'putForm', 'patchForm'].forEach((method) => {
+    instance[method] = function (url, data, config) {
+      return instance.request({
+        url,
+        data,
+        method,
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        },
+        ...config
+      })
+    }
+  })
+}
+
 const headMap: WeakMap<OnionInterceptor, MiddlewareLinkNode> = new WeakMap()
 const tailMap: WeakMap<OnionInterceptor, MiddlewareLinkNode> = new WeakMap()
 
-interface AxiosInstanceLike {
-  request: Function
-}
-
 export class OnionInterceptor<Ctx = any> {
   constructor(instance?: AxiosInstanceLike) {
-    headMap.set(this, new MiddlewareLinkNode<Ctx>(async (_, next) => await next())) // The handler function in the first node is used if use() is never used.
-    tailMap.set(this, headMap.get(this) as MiddlewareLinkNode<Ctx>)
-
-    if (!isNil(instance?.request) && isFunction(instance?.request))
-      this.rewriteAxiosRequest(instance!)
-  }
-
-  rewriteAxiosRequest(instance: AxiosInstanceLike) {
-    const original = instance.request
-    const self = this
-    instance.request = function request<T = any>(config: unknown) {
-      const ctx = { config } as any
-      return new Promise<T>((resolve) => {
-        self.handle(ctx, async (_: Ctx, next: Function) => {
-          await original
-            .apply(this, arguments)
-            .then((res) => {
-              ctx.res = res
-              resolve(res as unknown as Promise<T>)
-            })
-            .finally(() => next())
-        })
+    headMap.set(
+      this,
+      new MiddlewareLinkNode<Ctx>(async (ctx: Ctx, next) => {
+        const res = await next()
+        return !isNil(res) ? res : (ctx as any)?.res
       })
-    }
+    ) // The handler function in the first node is used if use() is never used.
+    tailMap.set(this, headMap.get(this) as MiddlewareLinkNode<Ctx>)
+    if (isAxiosInstanceLike(instance)) rewriteRequest(instance!, this)
   }
 
   /**
@@ -171,11 +205,7 @@ export class OnionInterceptor<Ctx = any> {
    * @param coreFn
    */
   public handle(ctx: Ctx, coreFn: Function) {
-    return compose<Ctx>(
-      headMap.get(this)?.getNext() ?? (headMap.get(this) as MiddlewareLinkNode<Ctx>),
-      ctx,
-      coreFn
-    )
+    return compose<Ctx>(headMap.get(this) as MiddlewareLinkNode<Ctx>, ctx, coreFn)
   }
 }
 

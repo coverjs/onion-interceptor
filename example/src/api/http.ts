@@ -2,9 +2,8 @@ import { OnionInterceptor } from 'onion-interceptor'
 
 import { interceptors } from '../interceptor'
 import axios, { AxiosInstance, AxiosRequestConfig } from 'axios'
-// import { resolve } from 'path'
 
-export class Http {
+export class XAxios {
   private instance: AxiosInstance
   private interceptor: OnionInterceptor
   constructor() {
@@ -16,18 +15,24 @@ export class Http {
       }
     })
     this.interceptor = new OnionInterceptor(this.instance)
-    // interceptors.forEach((item) => this.interceptor.use(item))
     this.interceptor.use(...interceptors)
   }
-  request<T = any>(config: AxiosRequestConfig): Promise<T> {
-    return new Promise<T>((resolve) => {
-      this.instance.request<T>(config).then((res) => {
-        resolve(res.data)
-      })
-    })
-  }
 
+  // 简单示例
   get(config: AxiosRequestConfig): Promise<any> {
-    return this.request({ ...config, method: 'get' })
+    return this.instance.request({ ...config, method: 'get' })
   }
 }
+
+const http = axios.create({
+  baseURL: 'https://api.github.com/',
+  timeout: 1000 * 10,
+  headers: {
+    'Content-Type': 'application/json'
+  }
+})
+
+const interceptor = new OnionInterceptor(http)
+interceptor.use(...interceptors)
+
+export { http }
