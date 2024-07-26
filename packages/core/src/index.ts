@@ -172,13 +172,21 @@ function rewriteRequest(instance: AxiosInstanceLike, interceptor: OnionIntercept
 const headMap: WeakMap<OnionInterceptor, MiddlewareLinkNode> = new WeakMap()
 const tailMap: WeakMap<OnionInterceptor, MiddlewareLinkNode> = new WeakMap()
 
+/**
+ *  创建一个洋葱模型拦截器
+ *  ,泛型 Ctx 上下文类型
+ */
 export class OnionInterceptor<Ctx = any> {
+  /**
+   * 构造函数
+   * @param instance axios实例(可选)
+   */
   constructor(instance?: AxiosInstanceLike) {
     headMap.set(
       this,
       new MiddlewareLinkNode<Ctx>(async (ctx: Ctx, next) => {
         const res = await next()
-        return !isNil(res) ? res : (ctx as any)?.res
+        return !isNil(res) ? res : ((ctx as any)?.res ?? ctx)
       })
     ) // The handler function in the first node is used if use() is never used.
     tailMap.set(this, headMap.get(this) as MiddlewareLinkNode<Ctx>)

@@ -11,10 +11,10 @@ hero:
     alt: Coverjs Logo
   actions:
     - theme: brand
-      text: Markdown Examples
-      link: /markdown-examples
+      text: 指南
+      link: /src/README
     - theme: alt
-      text: API Examples
-      link: /api-examples
+      text: 文档快览
+      link: /src/globals
 ---
 

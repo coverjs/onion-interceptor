@@ -26,7 +26,7 @@
     "emitDecoratorMetadata": true,
     "declarationDir": "dist/types",
     "outDir": "dist/lib",
-    "typeRoots": ["node_modules/@types"],
+    "typeRoots": ["node_modules/@types"]
   },
-  "include": ["packages/**/*.ts"]
+  "include": ["docs/**/*.ts", "packages/**/*.ts", "env.d.ts"]
 }
