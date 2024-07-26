@@ -8,6 +8,5 @@ export async function errorInterceptor(ctx: any, next: Next) {
     throw Promise.reject(error)
   } finally {
     console.log('errorInterceptor end', ctx)
-    // return ctx.res?.data
   }
 }

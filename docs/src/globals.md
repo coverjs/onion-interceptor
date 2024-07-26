@@ -10,8 +10,6 @@
 
 ## 接口
 
-- [AxiosInstanceLike](interfaces/AxiosInstanceLike.md)
-- [MiddlewareKlass](interfaces/MiddlewareKlass.md)
 - [MiddlewareKlassConstructor](interfaces/MiddlewareKlassConstructor.md)
 - [Opeartion](interfaces/Opeartion.md)
 

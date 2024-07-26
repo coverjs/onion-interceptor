@@ -10,6 +10,11 @@ import { isFunction, isOperation, isNil, isAxiosInstanceLike } from './is'
 
 const nextPKey = Symbol('nextP')
 const handleMap: WeakMap<MiddlewareLinkNode, Middleware> = new WeakMap()
+
+/**
+ * MiddlewareLinkNode 类代表中间件链接节点。
+ * 此类用于创建洋葱模型的中间件链。
+ */
 class MiddlewareLinkNode<Ctx = any> {
   private [nextPKey]: MiddlewareLinkNode<Ctx> | null = null
   constructor(handle?: Middleware<Ctx>) {
@@ -49,8 +54,19 @@ class MiddlewareLinkNode<Ctx = any> {
 }
 
 /**
- * Generate Operator
- * @param fn
+ * Generate Operator 函数用于创建一个操作符。
+ * @param fn - 要转换成操作符的中间件函数。
+ * @returns 转换后的操作符。
+ *
+ * @example
+ * ```typescript
+ * // 创建操作符用于 一些快捷操作 如 catchError 等
+ * const myMiddleware = (ctx: any, next: Next) => {
+ *   // do something
+ * };
+ * const myOperation = operate(myMiddleware);
+ *
+ * ```
  */
 export function operate(fn: Middleware) {
   if (!isFunction(fn)) throw new TypeError('operate must be a function!')
@@ -59,8 +75,20 @@ export function operate(fn: Middleware) {
 }
 
 /**
- * Get operator pipe from argument list
- * @param args
+ * pipeFromArgs 函数从参数列表中获取操作符管道。
+ * @param args - 包含操作符的参数数组。
+ * @returns 中间件链接节点。
+ *
+ * @example
+ * ```typescript
+ * const middlewareA = (ctx: any, next: Next) => {
+ *   // do something
+ * };
+ * const middlewareB = operate((ctx: any, next: Next) => {
+ *   // do something
+ * });
+ * const pipe = pipeFromArgs([middlewareA, middlewareB]);
+ * ```
  */
 function pipeFromArgs<T>(args: unknown[]) {
   const head = new MiddlewareLinkNode<T>()
@@ -173,8 +201,26 @@ const headMap: WeakMap<OnionInterceptor, MiddlewareLinkNode> = new WeakMap()
 const tailMap: WeakMap<OnionInterceptor, MiddlewareLinkNode> = new WeakMap()
 
 /**
- *  创建一个洋葱模型拦截器
- *  ,泛型 Ctx 上下文类型
+ * OnionInterceptor 类创建一个洋葱模型拦截器。
+ * 拦截器可以用于拦截和修改 HTTP 请求和响应。
+ * @param instance - (可选) Axios 实例。
+ *
+ * @example
+ * ```typescript
+ * import axios from 'axios';
+ * const http = axios.create({
+ *   baseURL: 'https://api.github.com/',
+ *   headers: {
+ *     'Content-Type': 'application/json'
+ *   }
+ * });
+ * const interceptor = new OnionInterceptor(http);
+ *
+ * interceptor.use(async(ctx: any, next: Next) => {
+ *   // 在这里可以修改请求配置或执行其他操作
+ *   await next();
+ * });
+ * ```
  */
 export class OnionInterceptor<Ctx = any> {
   /**
@@ -194,8 +240,32 @@ export class OnionInterceptor<Ctx = any> {
   }
 
   /**
-   * Adding Middleware to the Interceptor Instance
-   * @param middleware
+   * use 方法用于添加中间件到拦截器实例。
+   * @param middleware - 一个或多个中间件函数或中间件类构造器。
+   * @returns 当前拦截器实例。
+   *
+   * @example
+   * ```typescript
+   * class AuthMiddleware {
+   *   async intercept(ctx: any, next: Next) {
+   *     // 添加认证逻辑
+   *     await next();
+   *   }
+   * }
+   *
+   * async funciont loadingMiddleware(ctx: any, next: Next) {
+   *    // loading start
+   *    try {
+   *      await next();
+   *    } finally {
+   *      // loading end
+   *    }
+   * }
+   *
+   * interceptor.use(loadingMiddlewre, AuthMiddleware);
+   * // or interceptor.use(loadingMiddlewre).use(AuthMiddleware);
+   * // or interceptor.use(loadingMiddlewre); interceptor.use(AuthMiddleware);
+   * ```
    */
   public use(...args: Array<Middleware<Ctx> | MiddlewareKlassConstructor<Ctx>>) {
     args.forEach((middleware) => {
@@ -208,13 +278,31 @@ export class OnionInterceptor<Ctx = any> {
   }
 
   /**
-   * Use the onion interceptor to intercept the target function.
-   * @param ctx
-   * @param coreFn
+   * handle 方法用于使用洋葱拦截器拦截目标函数(是的通用性大幅提高)。
+   * @param ctx - 上下文对象。
+   * @param coreFn - 核心函数。
+   * @returns 一个 Promise，代表拦截处理的结果。
+   *
+   * @example
+   * ```typescript
+   * // 当构造函数为传入参数，可以使用 handle 方法进行拦截处理。
+   * const ctx = { foo: 'bar' };
+   * interceptor.handle(ctx, async(_ctx, next) => {
+   *   // 执行核心逻辑
+   *   await doSomething();
+   *   ctx.someData = 'some data';
+   *   next();
+   * });
+   * ```
    */
   public handle(ctx: Ctx, coreFn: Function) {
     return compose<Ctx>(headMap.get(this) as MiddlewareLinkNode<Ctx>, ctx, coreFn)
   }
 }
 
-export * from './types'
+export {
+  Middleware,
+  MiddlewareKlassConstructor,
+  Next,
+  Opeartion
+}

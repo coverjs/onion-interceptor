@@ -4,11 +4,14 @@
 
 # 接口: Opeartion()
 
+Operation 接口扩展了 Middleware 类型，表示一个操作。
+操作对象包含一个特殊的键，用于标识它是一个操作。
+
 ## 继承
 
 - [`Middleware`](../type-aliases/Middleware.md)
 
-> **Opeartion**(`ctx`, `next`): `Promise`\<`void`\>
+> **Opeartion**(`ctx`, `next`): `Promise`\<`any`\>
 
 ## 参数
 
@@ -19,11 +22,11 @@
 
 ## 返回值类型
 
-`Promise`\<`void`\>
+`Promise`\<`any`\>
 
 ## 查看源码
 
-[types.ts:6](https://github.com/coverjs/onion-interceptor/blob/594421c31ed42493b820500a185c38febcee0b53/packages/core/src/types.ts#L6)
+[types.ts:21](https://github.com/coverjs/onion-interceptor/blob/4cc2c488931cb6f687c063d370f3262121050ff8/packages/core/src/types.ts#L21)
 
 ## Properties
 
@@ -33,4 +36,4 @@
 
 #### 查看源码
 
-[types.ts:7](https://github.com/coverjs/onion-interceptor/blob/594421c31ed42493b820500a185c38febcee0b53/packages/core/src/types.ts#L7)
+[types.ts:22](https://github.com/coverjs/onion-interceptor/blob/4cc2c488931cb6f687c063d370f3262121050ff8/packages/core/src/types.ts#L22)

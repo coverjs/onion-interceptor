@@ -2,15 +2,19 @@
 
 ***
 
-# 类型别名: Middleware()\<Ctx\>
+# 类型别名: Middleware()\<Ctx, Res\>
 
-> **Middleware**\<`Ctx`\>: (`ctx`, `next`) => `Promise`\<`void`\>
+> **Middleware**\<`Ctx`, `Res`\>: (`ctx`, `next`) => `Promise`\<`void` \| `Res`\>
+
+Middleware 类型定义了一个中间件函数的签名。
+中间件函数接收一个上下文对象和一个 next 函数，并返回一个 Promise 对象。
 
 ## 类型参数
 
-| 类型参数 | Value |
-| :------ | :------ |
-| `Ctx` | `any` |
+| 类型参数 | Value | 描述 |
+| :------ | :------ | :------ |
+| `Ctx` | `any` | 上下文对象的类型。 |
+| `Res` | `any` | - |
 
 ## 参数
 
@@ -21,8 +25,8 @@
 
 ## 返回值类型
 
-`Promise`\<`void`\>
+`Promise`\<`void` \| `Res`\>
 
 ## 查看源码
 
-[types.ts:3](https://github.com/coverjs/onion-interceptor/blob/594421c31ed42493b820500a185c38febcee0b53/packages/core/src/types.ts#L3)
+[types.ts:8](https://github.com/coverjs/onion-interceptor/blob/4cc2c488931cb6f687c063d370f3262121050ff8/packages/core/src/types.ts#L8)
