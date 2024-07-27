@@ -11,9 +11,9 @@ importers:
       '@eslint/js':
         specifier: ^9.7.0
         version: 9.7.0
-      '@onion-interceptor/adapter':
+      '@onion-interceptor/pipes':
         specifier: workspace:*
-        version: link:packages/adapter
+        version: link:packages/pipes
       '@release-it/conventional-changelog':
         specifier: ^5.1.1
         version: 5.1.1(release-it@15.11.0)
@@ -91,9 +91,13 @@ importers:
         specifier: ^2.0.24
         version: 2.0.29(typescript@5.4.5)
 
-  packages/adapter: {}
-
   packages/core: {}
+
+  packages/pipes:
+    dependencies:
+      onion-interceptor:
+        specifier: latest
+        version: 0.0.4-beta
 
 packages:
 
@@ -2513,6 +2517,9 @@ packages:
   onetime@6.0.0:
     resolution: {integrity: sha512-1FlR+gjXK7X+AsAHso35MnyN5KqGwJRi/31ft6x0M194ht7S+rWAvd7PHss9xSKMzE0asv1pyIHaJYq+BbacAQ==}
     engines: {node: '>=12'}
+
+  onion-interceptor@0.0.4-beta:
+    resolution: {integrity: sha512-NkygfqgEqWnUQ1mN2kO2b75Yhn9tMb++GWqSngqL8roXHZ4Y8iSx6jIMQwqX6MJG6J8N9NFm0XBdIXfpc6RB0A==}
 
   open@9.1.0:
     resolution: {integrity: sha512-OS+QTnw1/4vrf+9hh1jc1jnYjzSG4ttTBB8UxOwAnInG3Uo4ssetzC1ihqaIHjLJnA5GGlRl6QlZXOTQhRBUvg==}
@@ -6296,6 +6303,8 @@ snapshots:
   onetime@6.0.0:
     dependencies:
       mimic-fn: 4.0.0
+
+  onion-interceptor@0.0.4-beta: {}
 
   open@9.1.0:
     dependencies:

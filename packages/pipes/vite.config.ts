@@ -5,16 +5,19 @@ export default defineConfig({
   plugins: [
     dts({
       outDir: 'dist',
-      include: './src',
+      include:'.',
       exclude: 'vite.config.ts'
     })
   ],
   build: {
     lib: {
-      entry: './src/index.ts',
-      name: 'onion-interceptor',
+      entry: './index.ts',
+      name: '@onion-interceptor/pipes',
       fileName: 'index',
       formats: ['es']
+    },
+    rollupOptions: {
+      external: ['onion-interceptor']
     }
   }
 })

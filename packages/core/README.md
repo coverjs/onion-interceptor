@@ -10,7 +10,7 @@
 
 ## 安装
 
-使用 npm 或 yarn 安装 `onion-interceptor` :
+使用 npm 或 yarn 或 pnpm 安装 `onion-interceptor` :
 
 ```bash
 npm install onion-interceptor
@@ -20,6 +20,12 @@ npm install onion-interceptor
 
 ```bash
 yarn add onion-interceptor
+```
+
+或者
+
+```bash
+pnpm add onion-interceptor
 ```
 
 ## 使用方法
@@ -103,6 +109,31 @@ export const dataInterceptor: Middleware = async function (ctx, next) {
   console.log('dataInterceptor end', ctx)
   //// 处于洋葱最外层的拦截器 可通过 return 返回特定数据(不写 return 则会按原数据返回)
   return ctx.res.data
+}
+```
+
+当然还可以安装 `@onion-interceptor/pipes` 模块，使用封装的一系列操作管道
+
+[@onion-interceptor/pipes - npm (npmjs.com)](https://www.npmjs.com/package/@onion-interceptor/pipes)
+
+```typescript
+import type { Next, Context } from 'onion-interceptor'
+import { catchError, finalize} from '@onion-interceptor/pipes'
+
+export async function errorInterceptor(ctx: Context, next: Next) {
+  console.log('errorInterceptor start', ctx)
+  await next(
+    catchError(err => {
+      console.log(error)
+      return Promise.reject(error)
+    }),
+    finally(() => console.log('errorInterceptor end', ctx))
+  )
+}
+
+export async function loadingInterceptor(ctx: Context, next: Next) {
+  console.log('loadingInterceptor start', ctx)
+  await next(finally(() => console.log('loadingInterceptor end', ctx)))
 }
 ```
 

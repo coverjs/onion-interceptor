@@ -2,10 +2,9 @@
 import { http } from './api/http'
 import { onMounted } from 'vue'
 
-// const http = new XAxios()
 
 onMounted(() => {
-  http.get('/users').then((res) => {
+  http.get('/userss').then((res) => {
     console.log(res)
   })
 })

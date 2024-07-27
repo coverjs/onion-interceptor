@@ -1,12 +1,16 @@
 import type { Next, Context } from 'onion-interceptor'
+import { tap } from '@onion-interceptor/pipes'
 export async function errorInterceptor(ctx: Context, next: Next) {
   console.log('errorInterceptor start', ctx)
-  try {
-    await next()
-  } catch (error) {
-    console.log(error)
-    throw Promise.reject(error)
-  } finally {
-    console.log('errorInterceptor end', ctx)
-  }
+
+  await next(
+    tap(
+      (ctx) => console.log('find error in res', ctx),
+      (error) => {
+        console.log('errorInterceptor catchError', error)
+        throw error
+      }
+    )
+  )
+  console.log('errorInterceptor end', ctx)
 }

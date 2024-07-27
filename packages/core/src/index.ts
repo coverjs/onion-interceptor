@@ -169,7 +169,7 @@ function rewriteRequest(instance: AxiosInstanceLike, interceptor: OnionIntercept
     const ctx: Context = { args, cfg: instance.defaults } as Context
     return (await interceptor.handle(
       ctx,
-      async (_ctx, next: Next) =>
+      async (_ctx: Context, next: Next) =>
         await original
           .apply(this, args)
           .then((res) => {
@@ -219,14 +219,14 @@ const tailMap: WeakMap<OnionInterceptor, MiddlewareLinkNode> = new WeakMap()
  * import type { Context, Next } from 'onion-interceptor';
  * import { OnionInterceptor } from 'onion-interceptor';
  * import axios from 'axios';
- * 
+ *
  * const http = axios.create({
  *   baseURL: 'https://api.github.com/',
  *   headers: {
  *     'Content-Type': 'application/json'
  *   }
  * });
- * 
+ *
  * // 洋葱拦截器 实例化时可以传入类 Axios 实例 (也就意味着 可以通过 fetch 封装)
  * // 只需要实例上存在 request 方法，和 defaults (默认配置) 属性即可
  * const interceptor = new OnionInterceptor(http);

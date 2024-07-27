@@ -106,6 +106,31 @@ export const dataInterceptor: Middleware = async function (ctx, next) {
 }
 ```
 
+当然还可以安装 `@onion-interceptor/pipes` 模块，使用封装的一系列操作管道
+
+[@onion-interceptor/pipes - npm (npmjs.com)](https://www.npmjs.com/package/@onion-interceptor/pipes)
+
+```typescript
+import type { Next, Context } from 'onion-interceptor'
+import { catchError, finalize} from '@onion-interceptor/pipes'
+
+export async function errorInterceptor(ctx: Context, next: Next) {
+  console.log('errorInterceptor start', ctx)
+  await next(
+    catchError(err => {
+      console.log(error)
+      return Promise.reject(error)
+    }),
+    finally(() => console.log('errorInterceptor end', ctx))
+  )
+}
+
+export async function loadingInterceptor(ctx: Context, next: Next) {
+  console.log('loadingInterceptor start', ctx)
+  await next(finally(() => console.log('loadingInterceptor end', ctx)))
+}
+```
+
 ### console.log
 
 以下是浏览器控制台输出截图

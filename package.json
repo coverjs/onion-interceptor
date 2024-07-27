@@ -1,5 +1,5 @@
 {
-  "name": "@onion-interceptor/workspace",
+  "name": "onion-interceptor",
   "version": "0.0.1",
   "license": "MIT",
   "type": "module",
@@ -16,7 +16,7 @@
     "@eslint/js": "^9.7.0",
     "@types/node": "^20.12.7",
     "@vitest/coverage-v8": "^1.6.0",
-    "@onion-interceptor/adapter": "workspace:*",
+    "@onion-interceptor/pipes": "workspace:*",
     "onion-interceptor": "workspace:*",
     "concurrently": "^8.2.2",
     "axios": "^1.7.2",

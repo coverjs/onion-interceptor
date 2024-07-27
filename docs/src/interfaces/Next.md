@@ -27,4 +27,4 @@ next 函数用于调用中间件链的下一个中间件或执行核心逻辑。
 
 ## 查看源码
 
-[types.ts:166](https://github.com/coverjs/onion-interceptor/blob/d9442ccfd97eaff0832faec07c8e2be488e1ba7c/packages/core/src/types.ts#L166)
+[types.ts:166](https://github.com/coverjs/onion-interceptor/blob/d236aa63ca3a9e0fbece66c5ed18f82df60eea1f/packages/core/src/types.ts#L166)
