@@ -1,3 +1,7 @@
+**onion-interceptor** • [**Docs**](globals.md)
+
+***
+
 # onion-interceptor
 
 `onion-interceptor` 是一个受 Koa 洋葱模型和 Angular Interceptor 启发的请求拦截器工具，它允许您以 Koa 中间件的形式为 axios、fetch 等 HTTP 客户端编写请求拦截器。
@@ -59,23 +63,23 @@ export default http
 ```typescript
 /// 有函数和类两种写法
 
-import type { Next, Context, Middleware, MiddlewareKlass } from 'onion-interceptor'
+import type { Next, MiddlewareKlass } from 'onion-interceptor'
 
-export async function authInterceptor(ctx: Context, next: Next) {
+export async function authInterceptor(ctx: any, next: Next) {
   console.log('authInterceptor start', ctx)
   await next()
   console.log('authInterceptor end', ctx)
 }
 
 export class AuthInterceptor implements MiddlewareKlass {
-  async intercept(ctx: Context, next: Next) {
+  async intercept(ctx: any, next: Next) {
     console.log('AuthInterceptor start', ctx)
     await next()
     console.log('AuthInterceptor end', ctx)
   }
 }
 
-export async function errorInterceptor(ctx: Context, next: Next) {
+export async function errorInterceptor(ctx: any, next: Next) {
   console.log('errorInterceptor start', ctx)
   try {
     await next()
@@ -87,7 +91,7 @@ export async function errorInterceptor(ctx: Context, next: Next) {
   }
 }
 
-export async function loadingInterceptor(ctx: Context, next: Next) {
+export async function loadingInterceptor(ctx: any, next: Next) {
   console.log('loadingInterceptor start', ctx)
   try {
     await next()
@@ -96,8 +100,7 @@ export async function loadingInterceptor(ctx: Context, next: Next) {
   }
 }
 
-// 函数拦截器类型亦可用 Middleware 来描述
-export const dataInterceptor: Middleware = async function (ctx, next) {
+export async function dataInterceptor(ctx: any, next: Next) {
   console.log('dataInterceptor start', ctx)
   await next()
   console.log('dataInterceptor end', ctx)

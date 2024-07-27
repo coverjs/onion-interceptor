@@ -59,23 +59,23 @@ export default http
 ```typescript
 /// 有函数和类两种写法
 
-import type { Next, MiddlewareKlass } from 'onion-interceptor'
+import type { Next, Context, Middleware, MiddlewareKlass } from 'onion-interceptor'
 
-export async function authInterceptor(ctx: any, next: Next) {
+export async function authInterceptor(ctx: Context, next: Next) {
   console.log('authInterceptor start', ctx)
   await next()
   console.log('authInterceptor end', ctx)
 }
 
 export class AuthInterceptor implements MiddlewareKlass {
-  async intercept(ctx: any, next: Next) {
+  async intercept(ctx: Context, next: Next) {
     console.log('AuthInterceptor start', ctx)
     await next()
     console.log('AuthInterceptor end', ctx)
   }
 }
 
-export async function errorInterceptor(ctx: any, next: Next) {
+export async function errorInterceptor(ctx: Context, next: Next) {
   console.log('errorInterceptor start', ctx)
   try {
     await next()
@@ -87,7 +87,7 @@ export async function errorInterceptor(ctx: any, next: Next) {
   }
 }
 
-export async function loadingInterceptor(ctx: any, next: Next) {
+export async function loadingInterceptor(ctx: Context, next: Next) {
   console.log('loadingInterceptor start', ctx)
   try {
     await next()
@@ -96,7 +96,8 @@ export async function loadingInterceptor(ctx: any, next: Next) {
   }
 }
 
-export async function dataInterceptor(ctx: any, next: Next) {
+// 函数拦截器类型亦可用 Middleware 来描述
+export const dataInterceptor: Middleware = async function (ctx, next) {
   console.log('dataInterceptor start', ctx)
   await next()
   console.log('dataInterceptor end', ctx)

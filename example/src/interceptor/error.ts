@@ -1,5 +1,5 @@
-import type { Next } from 'onion-interceptor'
-export async function errorInterceptor(ctx: any, next: Next) {
+import type { Next, Context } from 'onion-interceptor'
+export async function errorInterceptor(ctx: Context, next: Next) {
   console.log('errorInterceptor start', ctx)
   try {
     await next()

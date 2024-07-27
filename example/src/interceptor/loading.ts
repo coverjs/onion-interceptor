@@ -1,6 +1,6 @@
-import type { Next } from 'onion-interceptor'
+import type { Middleware } from 'onion-interceptor'
 
-export async function loadingInterceptor(ctx: any, next: Next) {
+export const loadingInterceptor: Middleware = async function (ctx, next) {
   console.log('loadingInterceptor start', ctx)
   try {
     await next()

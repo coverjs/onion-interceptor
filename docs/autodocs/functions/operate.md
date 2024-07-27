@@ -12,7 +12,7 @@ Generate Operator 函数用于创建一个操作符。
 
 | 参数名 | 类型 | 描述 |
 | :------ | :------ | :------ |
-| `fn` | [`Middleware`](../interfaces/Middleware.md)\<[`Context`](../type-aliases/Context.md), `any`\> | 要转换成操作符的中间件函数。 |
+| `fn` | [`Middleware`](../type-aliases/Middleware.md) | 要转换成操作符的中间件函数。 |
 
 ## 返回值类型
 
@@ -24,9 +24,7 @@ Generate Operator 函数用于创建一个操作符。
 
 ```typescript
 // 创建操作符用于 一些快捷操作 如 catchError 等
-const myMiddleware:Middleware = async (ctx, next) => {
-  // do something
-  await next();
+const myMiddleware = (ctx: any, next: Next) => {
   // do something
 };
 const myOperation = operate(myMiddleware);
@@ -35,4 +33,4 @@ const myOperation = operate(myMiddleware);
 
 ## 查看源码
 
-[index.ts:79](https://github.com/coverjs/onion-interceptor/blob/d9442ccfd97eaff0832faec07c8e2be488e1ba7c/packages/core/src/index.ts#L79)
+[index.ts:71](https://github.com/coverjs/onion-interceptor/blob/d9442ccfd97eaff0832faec07c8e2be488e1ba7c/packages/core/src/index.ts#L71)

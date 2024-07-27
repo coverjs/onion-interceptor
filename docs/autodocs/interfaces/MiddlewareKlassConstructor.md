@@ -24,4 +24,4 @@ MiddlewareKlassConstructor 接口定义了一个中间件类的构造函数。
 
 #### 查看源码
 
-[types.ts:30](https://github.com/coverjs/onion-interceptor/blob/4cc2c488931cb6f687c063d370f3262121050ff8/packages/core/src/types.ts#L30)
+[types.ts:30](https://github.com/coverjs/onion-interceptor/blob/d9442ccfd97eaff0832faec07c8e2be488e1ba7c/packages/core/src/types.ts#L30)

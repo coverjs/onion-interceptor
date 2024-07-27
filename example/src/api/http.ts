@@ -19,9 +19,10 @@ export class XAxios {
   }
 
   // 简单示例
-  get(config: AxiosRequestConfig): Promise<any> {
+  get(config: AxiosRequestConfig): Promise<unknown> {
     return this.instance.request({ ...config, method: 'get' })
   }
+  // .... 其他方法 的封装
 }
 
 const http = axios.create({

@@ -2,8 +2,14 @@ import type {
   Opeartion,
   Middleware,
   Next,
+  MiddlewareKlass,
   MiddlewareKlassConstructor,
-  AxiosInstanceLike
+  AxiosResponse,
+  AxiosInstanceLike,
+  AxiosLikeCtx,
+  Context,
+  Method,
+  AxiosRequestConfig
 } from './types'
 import { isOpeartionKey } from './constants'
 import { isFunction, isOperation, isNil, isAxiosInstanceLike } from './is'
@@ -15,9 +21,9 @@ const handleMap: WeakMap<MiddlewareLinkNode, Middleware> = new WeakMap()
  * MiddlewareLinkNode 类代表中间件链接节点。
  * 此类用于创建洋葱模型的中间件链。
  */
-class MiddlewareLinkNode<Ctx = any> {
+class MiddlewareLinkNode<Ctx extends Context = Context> {
   private [nextPKey]: MiddlewareLinkNode<Ctx> | null = null
-  constructor(handle?: Middleware<Ctx>) {
+  constructor(handle?: Middleware) {
     isFunction(handle) && handleMap.set(this, handle)
   }
 
@@ -61,7 +67,9 @@ class MiddlewareLinkNode<Ctx = any> {
  * @example
  * ```typescript
  * // 创建操作符用于 一些快捷操作 如 catchError 等
- * const myMiddleware = (ctx: any, next: Next) => {
+ * const myMiddleware:Middleware = async (ctx, next) => {
+ *   // do something
+ *   await next();
  *   // do something
  * };
  * const myOperation = operate(myMiddleware);
@@ -81,22 +89,26 @@ export function operate(fn: Middleware) {
  *
  * @example
  * ```typescript
- * const middlewareA = (ctx: any, next: Next) => {
+ * const middlewareA:Middleware = async (ctx, next) => {
+ *   // do something
+ *   await next();
  *   // do something
  * };
- * const middlewareB = operate((ctx: any, next: Next) => {
+ * const middlewareB = operate(async (ctx: Context, next: Next) => {
+ *   // do something
+ *   await next();
  *   // do something
  * });
  * const pipe = pipeFromArgs([middlewareA, middlewareB]);
  * ```
  */
-function pipeFromArgs<T>(args: unknown[]) {
-  const head = new MiddlewareLinkNode<T>()
+function pipeFromArgs(args: unknown[]) {
+  const head = new MiddlewareLinkNode()
   let tail = head
   for (let item of args)
     if (isOperation(item)) {
-      tail.setNext(new MiddlewareLinkNode<T>(item))
-      tail = tail.getNext() as MiddlewareLinkNode<T>
+      tail.setNext(new MiddlewareLinkNode(item))
+      tail = tail.getNext() as MiddlewareLinkNode
     }
   return head.getNext()
 }
@@ -107,10 +119,10 @@ function pipeFromArgs<T>(args: unknown[]) {
  * @param context
  * @param core
  */
-function compose<Ctx>(root: MiddlewareLinkNode<Ctx>, ctx: Ctx, coreFn: Function) {
-  const visitedNodes: Set<MiddlewareLinkNode<Ctx>> = new Set()
+function compose(root: MiddlewareLinkNode, ctx: Context, coreFn: Function) {
+  const visitedNodes: Set<MiddlewareLinkNode> = new Set()
 
-  const dispatch = (node: MiddlewareLinkNode<Ctx>, ...args: Middleware<Ctx>[]): Promise<void> => {
+  const dispatch = (node: MiddlewareLinkNode, ...args: Middleware[]): Promise<void> => {
     if (node.isNil()) return Promise.resolve()
     if (visitedNodes.has(node)) return Promise.reject(new Error('next called multiple times'))
     visitedNodes.add(node)
@@ -118,12 +130,12 @@ function compose<Ctx>(root: MiddlewareLinkNode<Ctx>, ctx: Ctx, coreFn: Function)
     const opPipe = pipeFromArgs(args)
 
     try {
-      const nextNode: MiddlewareLinkNode<Ctx> =
+      const nextNode: MiddlewareLinkNode =
         node.getNext() ??
-        new MiddlewareLinkNode<Ctx>(node.isHandleAs(coreFn) ? void 0 : (coreFn as Middleware<Ctx>))
+        new MiddlewareLinkNode(node.isHandleAs(coreFn) ? void 0 : (coreFn as Middleware))
       return Promise.resolve<void>(
         opPipe
-          ? compose<Ctx>(opPipe, ctx, node.bind(ctx, dispatch.bind(void 0, nextNode)))
+          ? compose(opPipe, ctx, node.bind(ctx, dispatch.bind(void 0, nextNode)))
           : node.call(ctx, dispatch.bind(void 0, nextNode))
       ).finally(destroyFreeNode.bind(void 0, node, coreFn))
     } catch (err) {
@@ -151,18 +163,13 @@ function tryInstantiationMiddleware<T>(middleware: Middleware<T> | MiddlewareKla
 }
 
 function rewriteRequest(instance: AxiosInstanceLike, interceptor: OnionInterceptor) {
-  interface Ctx<T> {
-    cfg: any
-    args: Array<any>
-    res?: T | Promise<T>
-  }
   const original = instance.request
-  instance.request = async function request<T = any>() {
-    const args = Array.prototype.slice.call(arguments)
-    const ctx: Ctx<T> = { args, cfg: instance.defaults }
-    return await interceptor.handle(
+  instance.request = async function request<Data = any, T = any>() {
+    const args = Array.prototype.slice.call(arguments) as [AxiosRequestConfig]
+    const ctx: Context = { args, cfg: instance.defaults } as Context
+    return (await interceptor.handle(
       ctx,
-      async (_ctx: Ctx<T>, next: Next) =>
+      async (_ctx, next: Next) =>
         await original
           .apply(this, args)
           .then((res) => {
@@ -170,20 +177,22 @@ function rewriteRequest(instance: AxiosInstanceLike, interceptor: OnionIntercept
             return res as T | PromiseLike<T>
           })
           .finally(() => next())
-    )
+    )) as AxiosResponse<Data> | T
   }
-  ;['delete', 'get', 'head', 'options'].forEach((method) => {
-    instance[method] = function (url, config) {
+  ;(['delete', 'get', 'head', 'options'] as Method[]).forEach((method) => {
+    instance[method] = function (url: string, config?: AxiosRequestConfig) {
       return instance.request({ url, method, ...config })
     }
   })
-  ;['post', 'put', 'patch'].forEach((method) => {
-    instance[method] = function (url, data, config) {
+  ;(['post', 'put', 'patch'] as Method[]).forEach((method) => {
+    instance[method] = function (url: string, data?: unknown, config?: AxiosRequestConfig) {
       return instance.request({ url, data, method, ...config })
     }
-  })
-  ;['postForm', 'putForm', 'patchForm'].forEach((method) => {
-    instance[method] = function (url, data, config) {
+    instance[method + 'Form'] = function (
+      url: string,
+      data?: unknown,
+      config?: AxiosRequestConfig
+    ) {
       return instance.request({
         url,
         data,
@@ -207,22 +216,28 @@ const tailMap: WeakMap<OnionInterceptor, MiddlewareLinkNode> = new WeakMap()
  *
  * @example
  * ```typescript
+ * import type { Context, Next } from 'onion-interceptor';
+ * import { OnionInterceptor } from 'onion-interceptor';
  * import axios from 'axios';
+ * 
  * const http = axios.create({
  *   baseURL: 'https://api.github.com/',
  *   headers: {
  *     'Content-Type': 'application/json'
  *   }
  * });
+ * 
+ * // 洋葱拦截器 实例化时可以传入类 Axios 实例 (也就意味着 可以通过 fetch 封装)
+ * // 只需要实例上存在 request 方法，和 defaults (默认配置) 属性即可
  * const interceptor = new OnionInterceptor(http);
  *
- * interceptor.use(async(ctx: any, next: Next) => {
+ * interceptor.use(async(ctx: Context, next: Next) => {
  *   // 在这里可以修改请求配置或执行其他操作
  *   await next();
  * });
  * ```
  */
-export class OnionInterceptor<Ctx = any> {
+export class OnionInterceptor {
   /**
    * 构造函数
    * @param instance axios实例(可选)
@@ -230,12 +245,12 @@ export class OnionInterceptor<Ctx = any> {
   constructor(instance?: AxiosInstanceLike) {
     headMap.set(
       this,
-      new MiddlewareLinkNode<Ctx>(async (ctx: Ctx, next) => {
+      new MiddlewareLinkNode(async (ctx, next) => {
         const res = await next()
-        return !isNil(res) ? res : ((ctx as any)?.res ?? ctx)
+        return !isNil(res) ? res : (ctx?.res ?? ctx)
       })
     ) // The handler function in the first node is used if use() is never used.
-    tailMap.set(this, headMap.get(this) as MiddlewareLinkNode<Ctx>)
+    tailMap.set(this, headMap.get(this) as MiddlewareLinkNode)
     if (isAxiosInstanceLike(instance)) rewriteRequest(instance!, this)
   }
 
@@ -247,13 +262,13 @@ export class OnionInterceptor<Ctx = any> {
    * @example
    * ```typescript
    * class AuthMiddleware {
-   *   async intercept(ctx: any, next: Next) {
+   *   async intercept(ctx: Context, next: Next) {
    *     // 添加认证逻辑
    *     await next();
    *   }
    * }
    *
-   * async funciont loadingMiddleware(ctx: any, next: Next) {
+   * async funciont loadingMiddleware(ctx: Context, next: Next) {
    *    // loading start
    *    try {
    *      await next();
@@ -267,12 +282,12 @@ export class OnionInterceptor<Ctx = any> {
    * // or interceptor.use(loadingMiddlewre); interceptor.use(AuthMiddleware);
    * ```
    */
-  public use(...args: Array<Middleware<Ctx> | MiddlewareKlassConstructor<Ctx>>) {
+  public use(...args: Array<Middleware | MiddlewareKlassConstructor<Context>>) {
     args.forEach((middleware) => {
-      const fn = tryInstantiationMiddleware<Ctx>(middleware)
+      const fn = tryInstantiationMiddleware(middleware)
       if (!isFunction(fn)) throw new TypeError('middleware or intercept must be a function!')
-      tailMap.get(this)?.setNext(new MiddlewareLinkNode<Ctx>(fn))
-      tailMap.set(this, tailMap.get(this)?.getNext() as MiddlewareLinkNode<Ctx>)
+      tailMap.get(this)?.setNext(new MiddlewareLinkNode(fn))
+      tailMap.set(this, tailMap.get(this)?.getNext() as MiddlewareLinkNode)
     })
     return this
   }
@@ -295,14 +310,9 @@ export class OnionInterceptor<Ctx = any> {
    * });
    * ```
    */
-  public handle(ctx: Ctx, coreFn: Function) {
-    return compose<Ctx>(headMap.get(this) as MiddlewareLinkNode<Ctx>, ctx, coreFn)
+  public handle(ctx: Context, coreFn: Function) {
+    return compose(headMap.get(this) as MiddlewareLinkNode, ctx, coreFn)
   }
 }
 
-export {
-  Middleware,
-  MiddlewareKlassConstructor,
-  Next,
-  Opeartion
-}
+export { Middleware, MiddlewareKlass, Context, AxiosLikeCtx, Next, Opeartion }

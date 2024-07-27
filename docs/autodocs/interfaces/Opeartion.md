@@ -9,7 +9,7 @@ Operation 接口扩展了 Middleware 类型，表示一个操作。
 
 ## 继承
 
-- [`Middleware`](Middleware.md)
+- [`Middleware`](../type-aliases/Middleware.md)
 
 > **Opeartion**(`ctx`, `next`): `Promise`\<`any`\>
 
@@ -17,8 +17,8 @@ Operation 接口扩展了 Middleware 类型，表示一个操作。
 
 | 参数名 | 类型 |
 | :------ | :------ |
-| `ctx` | [`Context`](../type-aliases/Context.md) |
-| `next` | [`Next`](Next.md)\<`any`\> |
+| `ctx` | `any` |
+| `next` | [`Next`](../type-aliases/Next.md) |
 
 ## 返回值类型
 
@@ -26,7 +26,7 @@ Operation 接口扩展了 Middleware 类型，表示一个操作。
 
 ## 查看源码
 
-[types.ts:173](https://github.com/coverjs/onion-interceptor/blob/d9442ccfd97eaff0832faec07c8e2be488e1ba7c/packages/core/src/types.ts#L173)
+[types.ts:21](https://github.com/coverjs/onion-interceptor/blob/d9442ccfd97eaff0832faec07c8e2be488e1ba7c/packages/core/src/types.ts#L21)
 
 ## Properties
 
@@ -36,4 +36,4 @@ Operation 接口扩展了 Middleware 类型，表示一个操作。
 
 #### 查看源码
 
-[types.ts:174](https://github.com/coverjs/onion-interceptor/blob/d9442ccfd97eaff0832faec07c8e2be488e1ba7c/packages/core/src/types.ts#L174)
+[types.ts:22](https://github.com/coverjs/onion-interceptor/blob/d9442ccfd97eaff0832faec07c8e2be488e1ba7c/packages/core/src/types.ts#L22)

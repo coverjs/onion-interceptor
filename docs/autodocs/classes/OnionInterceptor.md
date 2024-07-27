@@ -2,7 +2,7 @@
 
 ***
 
-# 类: OnionInterceptor
+# 类: OnionInterceptor\<Ctx\>
 
 OnionInterceptor 类创建一个洋葱模型拦截器。
 拦截器可以用于拦截和修改 HTTP 请求和响应。
@@ -14,32 +14,32 @@ OnionInterceptor 类创建一个洋葱模型拦截器。
 ## 示例
 
 ```typescript
-import type { Context, Next } from 'onion-interceptor';
-import { OnionInterceptor } from 'onion-interceptor';
 import axios from 'axios';
-
 const http = axios.create({
   baseURL: 'https://api.github.com/',
   headers: {
     'Content-Type': 'application/json'
   }
 });
-
-// 洋葱拦截器 实例化时可以传入类 Axios 实例 (也就意味着 可以通过 fetch 封装)
-// 只需要实例上存在 request 方法，和 defaults (默认配置) 属性即可
 const interceptor = new OnionInterceptor(http);
 
-interceptor.use(async(ctx: Context, next: Next) => {
+interceptor.use(async(ctx: any, next: Next) => {
   // 在这里可以修改请求配置或执行其他操作
   await next();
 });
 ```
 
+## 类型参数
+
+| 类型参数 | Value |
+| :------ | :------ |
+| `Ctx` | `any` |
+
 ## Constructors
 
 ### new OnionInterceptor()
 
-> **new OnionInterceptor**(`instance`?): [`OnionInterceptor`](OnionInterceptor.md)
+> **new OnionInterceptor**\<`Ctx`\>(`instance`?): [`OnionInterceptor`](OnionInterceptor.md)\<`Ctx`\>
 
 构造函数
 
@@ -47,15 +47,15 @@ interceptor.use(async(ctx: Context, next: Next) => {
 
 | 参数名 | 类型 | 描述 |
 | :------ | :------ | :------ |
-| `instance`? | `AxiosInstanceLike`\<`any`\> | axios实例(可选) |
+| `instance`? | `AxiosInstanceLike` | axios实例(可选) |
 
 #### 返回值类型
 
-[`OnionInterceptor`](OnionInterceptor.md)
+[`OnionInterceptor`](OnionInterceptor.md)\<`Ctx`\>
 
 #### 查看源码
 
-[index.ts:245](https://github.com/coverjs/onion-interceptor/blob/d9442ccfd97eaff0832faec07c8e2be488e1ba7c/packages/core/src/index.ts#L245)
+[index.ts:230](https://github.com/coverjs/onion-interceptor/blob/d9442ccfd97eaff0832faec07c8e2be488e1ba7c/packages/core/src/index.ts#L230)
 
 ## Methods
 
@@ -69,7 +69,7 @@ handle 方法用于使用洋葱拦截器拦截目标函数(是的通用性大幅
 
 | 参数名 | 类型 | 描述 |
 | :------ | :------ | :------ |
-| `ctx` | [`Context`](../type-aliases/Context.md) | 上下文对象。 |
+| `ctx` | `Ctx` | 上下文对象。 |
 | `coreFn` | `Function` | 核心函数。 |
 
 #### 返回值类型
@@ -93,13 +93,13 @@ interceptor.handle(ctx, async(_ctx, next) => {
 
 #### 查看源码
 
-[index.ts:313](https://github.com/coverjs/onion-interceptor/blob/d9442ccfd97eaff0832faec07c8e2be488e1ba7c/packages/core/src/index.ts#L313)
+[index.ts:298](https://github.com/coverjs/onion-interceptor/blob/d9442ccfd97eaff0832faec07c8e2be488e1ba7c/packages/core/src/index.ts#L298)
 
 ***
 
 ### use()
 
-> **use**(...`args`): [`OnionInterceptor`](OnionInterceptor.md)
+> **use**(...`args`): [`OnionInterceptor`](OnionInterceptor.md)\<`Ctx`\>
 
 use 方法用于添加中间件到拦截器实例。
 
@@ -107,11 +107,11 @@ use 方法用于添加中间件到拦截器实例。
 
 | 参数名 | 类型 |
 | :------ | :------ |
-| ...`args` | ([`Middleware`](../interfaces/Middleware.md)\<[`Context`](../type-aliases/Context.md), `any`\> \| `MiddlewareKlassConstructor`\<[`Context`](../type-aliases/Context.md)\>)[] |
+| ...`args` | ([`Middleware`](../type-aliases/Middleware.md)\<`Ctx`\> \| [`MiddlewareKlassConstructor`](../interfaces/MiddlewareKlassConstructor.md)\<`Ctx`\>)[] |
 
 #### 返回值类型
 
-[`OnionInterceptor`](OnionInterceptor.md)
+[`OnionInterceptor`](OnionInterceptor.md)\<`Ctx`\>
 
 当前拦截器实例。
 
@@ -119,13 +119,13 @@ use 方法用于添加中间件到拦截器实例。
 
 ```typescript
 class AuthMiddleware {
-  async intercept(ctx: Context, next: Next) {
+  async intercept(ctx: any, next: Next) {
     // 添加认证逻辑
     await next();
   }
 }
 
-async funciont loadingMiddleware(ctx: Context, next: Next) {
+async funciont loadingMiddleware(ctx: any, next: Next) {
    // loading start
    try {
      await next();
@@ -141,4 +141,4 @@ interceptor.use(loadingMiddlewre, AuthMiddleware);
 
 #### 查看源码
 
-[index.ts:285](https://github.com/coverjs/onion-interceptor/blob/d9442ccfd97eaff0832faec07c8e2be488e1ba7c/packages/core/src/index.ts#L285)
+[index.ts:270](https://github.com/coverjs/onion-interceptor/blob/d9442ccfd97eaff0832faec07c8e2be488e1ba7c/packages/core/src/index.ts#L270)

@@ -10,15 +10,13 @@
 
 ## 接口
 
-- [AxiosLikeCtx](interfaces/AxiosLikeCtx.md)
-- [Middleware](interfaces/Middleware.md)
-- [MiddlewareKlass](interfaces/MiddlewareKlass.md)
-- [Next](interfaces/Next.md)
+- [MiddlewareKlassConstructor](interfaces/MiddlewareKlassConstructor.md)
 - [Opeartion](interfaces/Opeartion.md)
 
 ## 类型别名
 
-- [Context](type-aliases/Context.md)
+- [Middleware](type-aliases/Middleware.md)
+- [Next](type-aliases/Next.md)
 
 ## 函数
 
