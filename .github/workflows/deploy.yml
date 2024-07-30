@@ -22,9 +22,12 @@ jobs:
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
+      
+      - name: Build lib
+        run: pnpm build
 
       - name: Build docs
-        run: npm run docs:build
+        run: pnpm docs:build
 
       - name: Upload docs
         uses: actions/upload-artifact@v3

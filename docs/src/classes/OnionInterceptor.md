@@ -55,7 +55,7 @@ interceptor.use(async(ctx: Context, next: Next) => {
 
 #### 查看源码
 
-OnionInterceptor.ts:42
+[OnionInterceptor.ts:42](https://github.com/coverjs/onion-interceptor/blob/39df853848f88c9b20849334a641a1e2329fe982/packages/core/src/OnionInterceptor.ts#L42)
 
 ## Methods
 
@@ -93,7 +93,7 @@ interceptor.handle(ctx, async(_ctx, next) => {
 
 #### 查看源码
 
-OnionInterceptor.ts:111
+[OnionInterceptor.ts:111](https://github.com/coverjs/onion-interceptor/blob/39df853848f88c9b20849334a641a1e2329fe982/packages/core/src/OnionInterceptor.ts#L111)
 
 ***
 
@@ -141,4 +141,4 @@ interceptor.use(loadingMiddlewre, AuthMiddleware);
 
 #### 查看源码
 
-OnionInterceptor.ts:82
+[OnionInterceptor.ts:82](https://github.com/coverjs/onion-interceptor/blob/39df853848f88c9b20849334a641a1e2329fe982/packages/core/src/OnionInterceptor.ts#L82)

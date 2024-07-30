@@ -35,4 +35,4 @@ const myOperation = operate(myMiddleware);
 
 ## 查看源码
 
-methods.ts:152
+[methods.ts:152](https://github.com/coverjs/onion-interceptor/blob/39df853848f88c9b20849334a641a1e2329fe982/packages/core/src/methods.ts#L152)
