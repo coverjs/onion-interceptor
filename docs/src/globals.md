@@ -10,16 +10,12 @@
 
 ## 接口
 
-- [AxiosLikeCtx](interfaces/AxiosLikeCtx.md)
+- [Context](interfaces/Context.md)
 - [Middleware](interfaces/Middleware.md)
-- [MiddlewareKlass](interfaces/MiddlewareKlass.md)
 - [Next](interfaces/Next.md)
 - [Opeartion](interfaces/Opeartion.md)
 
-## 类型别名
-
-- [Context](type-aliases/Context.md)
-
 ## 函数
 
+- [createInterceptor](functions/createInterceptor.md)
 - [operate](functions/operate.md)

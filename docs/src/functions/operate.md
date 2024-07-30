@@ -12,7 +12,7 @@ Generate Operator 函数用于创建一个操作符。
 
 | 参数名 | 类型 | 描述 |
 | :------ | :------ | :------ |
-| `fn` | [`Middleware`](../interfaces/Middleware.md)\<[`Context`](../type-aliases/Context.md), `any`\> | 要转换成操作符的中间件函数。 |
+| `fn` | [`Middleware`](../interfaces/Middleware.md)\<[`Context`](../interfaces/Context.md), `any`\> | 要转换成操作符的中间件函数。 |
 
 ## 返回值类型
 
@@ -35,4 +35,4 @@ const myOperation = operate(myMiddleware);
 
 ## 查看源码
 
-[index.ts:79](https://github.com/coverjs/onion-interceptor/blob/d236aa63ca3a9e0fbece66c5ed18f82df60eea1f/packages/core/src/index.ts#L79)
+methods.ts:152

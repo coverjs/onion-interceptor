@@ -1,89 +1,89 @@
-import { isOpeartionKey } from './constants'
+import { isOpeartionKey } from "./constants";
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /* -----------------------------------------------axios types start------------------------------------------- */
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 export type Method =
-  | 'get'
-  | 'GET'
-  | 'delete'
-  | 'DELETE'
-  | 'head'
-  | 'HEAD'
-  | 'options'
-  | 'OPTIONS'
-  | 'post'
-  | 'POST'
-  | 'put'
-  | 'PUT'
-  | 'patch'
-  | 'PATCH'
+  | "get"
+  | "GET"
+  | "delete"
+  | "DELETE"
+  | "head"
+  | "HEAD"
+  | "options"
+  | "OPTIONS"
+  | "post"
+  | "POST"
+  | "put"
+  | "PUT"
+  | "patch"
+  | "PATCH";
 
-type Params = Record<string, any>
-type IHeaders = Record<string, any>
+type Params = Record<string, any>;
+type IHeaders = Record<string, any>;
 
 interface AxiosTransformer {
-  (data: unknown, headers: IHeaders): any
+  (data: unknown, headers: IHeaders): any;
 }
 
 interface Cancel {
-  message?: string
+  message?: string;
 }
 
 interface AxiosBasicCredentials {
-  username: string
-  password: string
+  username: string;
+  password: string;
 }
 
 interface CancelToken {
-  promise: Promise<Cancel>
-  reason?: Cancel
+  promise: Promise<Cancel>;
+  reason?: Cancel;
 
-  throwIfRequested(): void
-  [k: string]: any
+  throwIfRequested(): void;
+  [k: string]: any;
 }
 
 export interface AxiosRequestConfig<D = any> {
-  method?: Method
-  url?: string
-  data?: D
-  params?: Params
-  headers?: IHeaders | null | any
-  responseType?: XMLHttpRequestResponseType | ResponseType | any
-  timeout?: number
-  baseURL?: string
-  adapter?: 'http' | 'xhr' | 'fetch' | Function | any
+  method?: Method;
+  url?: string;
+  data?: D;
+  params?: Params;
+  headers?: IHeaders | null | any;
+  responseType?: XMLHttpRequestResponseType | ResponseType | any;
+  timeout?: number;
+  baseURL?: string;
+  adapter?: "http" | "xhr" | "fetch" | Function | any;
 
-  transformRequest?: AxiosTransformer | AxiosTransformer[]
-  transformResponse?: AxiosTransformer | AxiosTransformer[]
+  transformRequest?: AxiosTransformer | AxiosTransformer[];
+  transformResponse?: AxiosTransformer | AxiosTransformer[];
 
-  cancelToken?: CancelToken | any
+  cancelToken?: CancelToken | any;
 
-  withCredentials?: boolean
+  withCredentials?: boolean;
 
-  xsrfCookieName?: string
-  xsrfHeaderName?: string
+  xsrfCookieName?: string;
+  xsrfHeaderName?: string;
 
-  auth?: AxiosBasicCredentials
+  auth?: AxiosBasicCredentials;
 
-  validateStatus?: (status: number) => boolean
+  validateStatus?: (status: number) => boolean;
 
-  paramsSerializer?: (params: Params) => string
+  paramsSerializer?: (params: Params) => string;
 
-  onDownloadProgress?: (e: any) => void
-  onUploadProgress?: (e: any) => void
+  onDownloadProgress?: (e: any) => void;
+  onUploadProgress?: (e: any) => void;
 
-  [k: string]: any
+  [k: string]: any;
 }
 
 export interface AxiosResponse<T = any> {
-  data: T
-  status: number
-  statusText: string
-  headers: IHeaders
-  config: AxiosRequestConfig
-  request: XMLHttpRequest
+  data: T;
+  status: number;
+  statusText: string;
+  headers: IHeaders;
+  config: AxiosRequestConfig;
+  request: XMLHttpRequest;
 }
 export interface AxiosPromise<T = any> extends Promise<AxiosResponse<T>> {}
 /**
@@ -96,24 +96,48 @@ export interface AxiosInstanceLike<Cfg = any> {
    * @param config - 请求配置。// 这里用 any 是方便 fetch 封装
    * @returns 返回一个 Promise 对象，代表请求的结果。
    */
-  request: (config: Cfg) => Promise<any>
+  request: (config: Cfg) => Promise<any>;
   /** defaults 属性存储实例的默认配置。 */
-  defaults?: AxiosRequestConfig | any
+  defaults?: AxiosRequestConfig | any;
 
   // 快捷 HTTP 方法的声明
-  get?<T = any>(url: string, config?: AxiosRequestConfig): AxiosPromise<T>
-  delete?<T = any>(url: string, config?: AxiosRequestConfig): AxiosPromise<T>
-  head?<T = any>(url: string, config?: AxiosRequestConfig): AxiosPromise<T>
-  options?<T = any>(url: string, config?: AxiosRequestConfig): AxiosPromise<T>
-  post?<T = any>(url: string, data?: unknown, config?: AxiosRequestConfig): AxiosPromise<T>
-  put?<T = any>(url: string, data?: unknown, config?: AxiosRequestConfig): AxiosPromise<T>
-  patch?<T = any>(url: string, data?: unknown, config?: AxiosRequestConfig): AxiosPromise<T>
+  get?<T = any>(url: string, config?: AxiosRequestConfig): AxiosPromise<T>;
+  delete?<T = any>(url: string, config?: AxiosRequestConfig): AxiosPromise<T>;
+  head?<T = any>(url: string, config?: AxiosRequestConfig): AxiosPromise<T>;
+  options?<T = any>(url: string, config?: AxiosRequestConfig): AxiosPromise<T>;
+  post?<T = any>(
+    url: string,
+    data?: unknown,
+    config?: AxiosRequestConfig
+  ): AxiosPromise<T>;
+  put?<T = any>(
+    url: string,
+    data?: unknown,
+    config?: AxiosRequestConfig
+  ): AxiosPromise<T>;
+  patch?<T = any>(
+    url: string,
+    data?: unknown,
+    config?: AxiosRequestConfig
+  ): AxiosPromise<T>;
 
   // 快捷 HTTP 方法的声明，用于表单提交
-  postForm?<T = any>(url: string, data?: unknown, config?: AxiosRequestConfig): AxiosPromise<T>
-  putForm?<T = any>(url: string, data?: unknown, config?: AxiosRequestConfig): AxiosPromise<T>
-  patchForm?<T = any>(url: string, data?: unknown, config?: AxiosRequestConfig): AxiosPromise<T>
-  [key: string]: any
+  postForm?<T = any>(
+    url: string,
+    data?: unknown,
+    config?: AxiosRequestConfig
+  ): AxiosPromise<T>;
+  putForm?<T = any>(
+    url: string,
+    data?: unknown,
+    config?: AxiosRequestConfig
+  ): AxiosPromise<T>;
+  patchForm?<T = any>(
+    url: string,
+    data?: unknown,
+    config?: AxiosRequestConfig
+  ): AxiosPromise<T>;
+  [key: string]: any;
 }
 
 /**
@@ -123,15 +147,15 @@ export interface AxiosLikeCtx {
   /**
    * 请求参数 调用 request 时候传入的 （只有一个config）
    */
-  args?: AxiosRequestConfig[]
+  args?: AxiosRequestConfig[];
   /**
    * 默认配置 调用 axios.create 时候传入的配置
    */
-  cfg?: AxiosRequestConfig
+  cfg?: AxiosRequestConfig;
   /**
    * 请求响应
    */
-  res?: AxiosResponse
+  res?: AxiosResponse;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -140,12 +164,12 @@ export interface AxiosLikeCtx {
 
 // ----------------------------------------------------------------------------------------------------------
 
-export type CustomCtx = Record<string, any>
-
 /**
  * 上下文类型
  */
-export type Context = CustomCtx & AxiosLikeCtx
+export interface Context extends AxiosLikeCtx {
+  [key: string]: any;
+}
 
 /**
  * Middleware 类型定义了一个中间件函数的签名。
@@ -154,7 +178,7 @@ export type Context = CustomCtx & AxiosLikeCtx
  * @template Res 中间件函数返回类型。
  */
 export interface Middleware<Ctx = Context, Res = any> {
-  (ctx: Ctx, next: Next): Promise<Res>
+  (ctx: Ctx, next: Next): Promise<Res>;
 }
 
 /**
@@ -163,7 +187,7 @@ export interface Middleware<Ctx = Context, Res = any> {
  * @returns 返回一个 Promise 对象，代表 next 调用的结果。
  */
 export interface Next<Res = any> {
-  (...args: Opeartion[]): Promise<void | Res>
+  (...args: Opeartion[]): Promise<void | Res>;
 }
 
 /**
@@ -171,22 +195,5 @@ export interface Next<Res = any> {
  * 操作对象包含一个特殊的键，用于标识它是一个操作。
  */
 export interface Opeartion extends Middleware {
-  [isOpeartionKey]: boolean
-}
-
-/**
- * MiddlewareKlassConstructor 接口定义了一个中间件类的构造函数。
- * @template T 上下文对象的类型。
- */
-export interface MiddlewareKlassConstructor<T> {
-  new (): MiddlewareKlass<T>
-}
-
-/**
- * MiddlewareKlass 接口定义了一个中间件类的结构。
- * 它包含一个 intercept 方法，该方法符合 Middleware 函数签名。
- * @template T 上下文对象的类型。
- */
-export interface MiddlewareKlass<Ctx = Context> {
-  intercept: Middleware<Ctx>
+  [isOpeartionKey]: boolean;
 }

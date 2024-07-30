@@ -6,10 +6,10 @@ export default defineConfig({
   title: 'onion-interceptor',
   description: '通用网络请求拦截器工具',
   base: '/onion-interceptor/',
-  head: [['link', { rel: 'icon', href: '/onion-interceptor/logo.png' }]],
+  head: [['link', { rel: 'icon', href: '/onion-interceptor/onion.svg' }]],
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
-    logo: '/logo.png',
+    logo: '/onion.svg',
     sidebar: {
       '/src/README': [{ text: '快速上手', link: '/src/README' }],
       '/src/': navigation

@@ -1,39 +1,27 @@
-import { OnionInterceptor } from 'onion-interceptor'
+import { createInterceptor } from "onion-interceptor";
 
-import { interceptors } from '../interceptor'
-import axios, { AxiosInstance, AxiosRequestConfig } from 'axios'
-
-export class XAxios {
-  private instance: AxiosInstance
-  private interceptor: OnionInterceptor
-  constructor() {
-    this.instance = axios.create({
-      baseURL: 'https://api.github.com/',
-      timeout: 1000 * 10,
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
-    this.interceptor = new OnionInterceptor(this.instance)
-    this.interceptor.use(...interceptors)
-  }
-
-  // 简单示例
-  get(config: AxiosRequestConfig): Promise<unknown> {
-    return this.instance.request({ ...config, method: 'get' })
-  }
-  // .... 其他方法 的封装
-}
+import { interceptors } from "../interceptor";
+import axios from "axios";
 
 const http = axios.create({
-  baseURL: 'https://api.github.com/',
+  baseURL: "https://api.github.com/",
   timeout: 1000 * 10,
   headers: {
-    'Content-Type': 'application/json'
-  }
-})
+    "Content-Type": "application/json",
+  },
+});
 
-const interceptor = new OnionInterceptor(http)
-interceptor.use(...interceptors)
+createInterceptor(http).use(...interceptors);
 
-export { http }
+/**
+ *  const interceptor = createInterceptor(http);
+ * 
+ * 
+ *  function setupIntercepters(intercepter){
+ *    setupLoadingInterceptor(intercepter);
+ *    .....
+ *  }
+ * 
+ */
+
+export { http };

@@ -4,7 +4,7 @@ import { onMounted } from 'vue'
 
 
 onMounted(() => {
-  http.get('/userss').then((res) => {
+  http.get('/users').then((res) => {
     console.log(res)
   })
 })

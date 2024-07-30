@@ -1,6 +1,6 @@
 /** @type {import('typedoc').TypeDocOptions & import('typedoc-plugin-markdown').PluginOptions} */
 module.exports = {
-  entryPoints: ['./packages/core/src/index.ts', './packages/pipe/index.ts'],
+  entryPoints: ['./packages/core/src/index.ts'],
   out: 'docs/src',
   plugin: ['typedoc-plugin-markdown', './docs/.vitepress/theme/typedoc-theme.js'],
   theme: 'themeExpand',

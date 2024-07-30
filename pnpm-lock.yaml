@@ -96,8 +96,8 @@ importers:
   packages/pipes:
     dependencies:
       onion-interceptor:
-        specifier: latest
-        version: 0.0.4-beta
+        specifier: workspace:*
+        version: link:../core
 
 packages:
 
@@ -2530,9 +2530,6 @@ packages:
   onetime@6.0.0:
     resolution: {integrity: sha512-1FlR+gjXK7X+AsAHso35MnyN5KqGwJRi/31ft6x0M194ht7S+rWAvd7PHss9xSKMzE0asv1pyIHaJYq+BbacAQ==, tarball: https://r2.cnpmjs.org/onetime/-/onetime-6.0.0.tgz}
     engines: {node: '>=12'}
-
-  onion-interceptor@0.0.4-beta:
-    resolution: {integrity: sha512-NkygfqgEqWnUQ1mN2kO2b75Yhn9tMb++GWqSngqL8roXHZ4Y8iSx6jIMQwqX6MJG6J8N9NFm0XBdIXfpc6RB0A==}
 
   open@9.1.0:
     resolution: {integrity: sha512-OS+QTnw1/4vrf+9hh1jc1jnYjzSG4ttTBB8UxOwAnInG3Uo4ssetzC1ihqaIHjLJnA5GGlRl6QlZXOTQhRBUvg==}
@@ -6313,8 +6310,6 @@ snapshots:
   onetime@6.0.0:
     dependencies:
       mimic-fn: 4.0.0
-
-  onion-interceptor@0.0.4-beta: {}
 
   open@9.1.0:
     dependencies:

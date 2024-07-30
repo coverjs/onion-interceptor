@@ -10,7 +10,7 @@
 
 ## 安装
 
-使用 npm 或 yarn 或 pnpm 安装 `onion-interceptor` :
+使用 npm 或 yarn 安装 `onion-interceptor` :
 
 ```bash
 npm install onion-interceptor
@@ -22,42 +22,40 @@ npm install onion-interceptor
 yarn add onion-interceptor
 ```
 
-或者
-
-```bash
-pnpm add onion-interceptor
-```
-
 ## 使用方法
 
 ### 初始化
 
 ```typescript
 /// http.ts
-import { OnionInterceptor } from 'onion-interceptor'
+import { createInterceptor } from "onion-interceptor";
 import {
   loadingInterceptor,
   errorInterceptor,
   authInterceptor,
-  dataInterceptor
-} from '../interceptors'
-import axios from 'axios'
+  dataInterceptor,
+} from "../interceptors";
+import axios from "axios";
 
 const http = axios.create({
-  baseURL: 'https://api.github.com',
+  baseURL: "https://api.github.com",
   timeout: 1000 * 10,
   headers: {
-    'Content-Type': 'application/json'
-  }
-})
+    "Content-Type": "application/json",
+  },
+});
 
-/// OnionInterceptor 类的构造函数接收一个 AxiosInstance 实例作为参数
-const interceptor = new OnionInterceptor(http)
+/// createInterceptor接收一个类 AxiosInstance 实例作为参数
+createInterceptor(http).use(
+  dataInterceptor,
+  errorInterceptor,
+  loadingInterceptor,
+  authInterceptor
+);
 /// 调用 use 方法 (可链式调用也可一次传入多个拦截器作为参数)
-interceptor.use(dataInterceptor, errorInterceptor, loadingInterceptor, authInterceptor)
-// 或者 interceptor.use(errorInterceptor).use(loadingInterceptor).use(authInterceptor)
+// 或者 createInterceptor(http).use(errorInterceptor).use(loadingInterceptor).use(authInterceptor)
 
-export default http
+export default http;
 ```
 
 ### 拦截器书写
@@ -65,51 +63,43 @@ export default http
 ```typescript
 /// 有函数和类两种写法
 
-import type { Next, Context, Middleware, MiddlewareKlass } from 'onion-interceptor'
+import type { Next, Context, Middleware } from "onion-interceptor";
 
 export async function authInterceptor(ctx: Context, next: Next) {
-  console.log('authInterceptor start', ctx)
-  await next()
-  console.log('authInterceptor end', ctx)
-}
-
-export class AuthInterceptor implements MiddlewareKlass {
-  async intercept(ctx: Context, next: Next) {
-    console.log('AuthInterceptor start', ctx)
-    await next()
-    console.log('AuthInterceptor end', ctx)
-  }
+  console.log("authInterceptor start", ctx);
+  await next();
+  console.log("authInterceptor end", ctx);
 }
 
 export async function errorInterceptor(ctx: Context, next: Next) {
-  console.log('errorInterceptor start', ctx)
+  console.log("errorInterceptor start", ctx);
   try {
-    await next()
+    await next();
   } catch (error) {
-    console.log(error)
-    return Promise.reject(error)
+    console.log(error);
+    return Promise.reject(error);
   } finally {
-    console.log('errorInterceptor end', ctx)
+    console.log("errorInterceptor end", ctx);
   }
 }
 
 export async function loadingInterceptor(ctx: Context, next: Next) {
-  console.log('loadingInterceptor start', ctx)
+  console.log("loadingInterceptor start", ctx);
   try {
-    await next()
+    await next();
   } finally {
-    console.log('loadingInterceptor end', ctx)
+    console.log("loadingInterceptor end", ctx);
   }
 }
 
 // 函数拦截器类型亦可用 Middleware 来描述
 export const dataInterceptor: Middleware = async function (ctx, next) {
-  console.log('dataInterceptor start', ctx)
-  await next()
-  console.log('dataInterceptor end', ctx)
+  console.log("dataInterceptor start", ctx);
+  await next();
+  console.log("dataInterceptor end", ctx);
   //// 处于洋葱最外层的拦截器 可通过 return 返回特定数据(不写 return 则会按原数据返回)
-  return ctx.res.data
-}
+  return ctx.res.data;
+};
 ```
 
 当然还可以安装 `@onion-interceptor/pipes` 模块，使用封装的一系列操作管道

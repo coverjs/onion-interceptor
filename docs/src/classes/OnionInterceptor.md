@@ -55,7 +55,7 @@ interceptor.use(async(ctx: Context, next: Next) => {
 
 #### 查看源码
 
-[index.ts:245](https://github.com/coverjs/onion-interceptor/blob/d236aa63ca3a9e0fbece66c5ed18f82df60eea1f/packages/core/src/index.ts#L245)
+OnionInterceptor.ts:42
 
 ## Methods
 
@@ -69,7 +69,7 @@ handle 方法用于使用洋葱拦截器拦截目标函数(是的通用性大幅
 
 | 参数名 | 类型 | 描述 |
 | :------ | :------ | :------ |
-| `ctx` | [`Context`](../type-aliases/Context.md) | 上下文对象。 |
+| `ctx` | [`Context`](../interfaces/Context.md) | 上下文对象。 |
 | `coreFn` | `Function` | 核心函数。 |
 
 #### 返回值类型
@@ -93,7 +93,7 @@ interceptor.handle(ctx, async(_ctx, next) => {
 
 #### 查看源码
 
-[index.ts:313](https://github.com/coverjs/onion-interceptor/blob/d236aa63ca3a9e0fbece66c5ed18f82df60eea1f/packages/core/src/index.ts#L313)
+OnionInterceptor.ts:111
 
 ***
 
@@ -107,7 +107,7 @@ use 方法用于添加中间件到拦截器实例。
 
 | 参数名 | 类型 |
 | :------ | :------ |
-| ...`args` | ([`Middleware`](../interfaces/Middleware.md)\<[`Context`](../type-aliases/Context.md), `any`\> \| `MiddlewareKlassConstructor`\<[`Context`](../type-aliases/Context.md)\>)[] |
+| ...`args` | [`Middleware`](../interfaces/Middleware.md)\<[`Context`](../interfaces/Context.md), `any`\>[] |
 
 #### 返回值类型
 
@@ -125,7 +125,7 @@ class AuthMiddleware {
   }
 }
 
-async funciont loadingMiddleware(ctx: Context, next: Next) {
+async function loadingMiddleware(ctx: Context, next: Next) {
    // loading start
    try {
      await next();
@@ -141,4 +141,4 @@ interceptor.use(loadingMiddlewre, AuthMiddleware);
 
 #### 查看源码
 
-[index.ts:285](https://github.com/coverjs/onion-interceptor/blob/d236aa63ca3a9e0fbece66c5ed18f82df60eea1f/packages/core/src/index.ts#L285)
+OnionInterceptor.ts:82

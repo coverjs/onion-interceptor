@@ -26,23 +26,27 @@ pnpm add @onion-interceptor/pipes
 
 - catchError
 
+> 捕获错误
+
 ```typescript
-import { catchError } from '@onion-interceptor/pipes'
-import type { Next, Context } from 'onion-interceptor'
+import { catchError } from "@onion-interceptor/pipes";
+import type { Next, Context } from "onion-interceptor";
 
 export async function errorInterceptor(ctx: Context, next: Next) {
-  console.log('errorInterceptor start', ctx)
+  console.log("errorInterceptor start", ctx);
   await next(
     catchError((err) => {
-      console.log(error)
-      return Promise.reject(error)
+      console.log(error);
+      return Promise.reject(error);
     })
-  )
-  console.log('errorInterceptor end', ctx)
+  );
+  console.log("errorInterceptor end", ctx);
 }
 ```
 
 - finalize
+
+> finalize 是一个操作管道，用于在请求或响应完成时执行一些操作(不管成功或失败)。
 
 ```typescript
 import { finalize } from '@onion-interceptor/pipes'
@@ -56,25 +60,29 @@ export async function loadingInterceptor(ctx: Context, next: Next) {
 
 - tap
 
+> tap 是一个操作管道，可接受三个回调函数，后两个选填 分别为 成功后的回调，错误回调，无论成功还是失败都会执行的回调。
+
 ```typescript
-import { tap } from '@onion-interceptor/pipes'
+import { tap } from "@onion-interceptor/pipes";
 
 export async function errorInterceptor(ctx: Context, next: Next) {
-  console.log('errorInterceptor start', ctx)
+  console.log("errorInterceptor start", ctx);
   await next(
     tap(
-      (_ctx) => console.log('find error in res', _ctx.res),
+      (_ctx) => console.log("find error in res", _ctx.res),
       (error) => {
-        console.log(error)
-        return Promise.reject(error)
+        console.log(error);
+        return Promise.reject(error);
       },
-      () => console.log('errorInterceptor end', ctx)
+      () => console.log("errorInterceptor end", ctx)
     )
-  )
+  );
 }
 ```
 
 - delay
+
+> 延迟拦截器
 
 ```typescript
 import type { Next, Context } from 'onion-interceptor'

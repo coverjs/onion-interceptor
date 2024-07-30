@@ -7,7 +7,7 @@ hero:
   text: "洋葱拦截器"
   tagline: 通用网络请求拦截器工具
   image: 
-    src: /logo.png
+    src: /onion.svg
     alt: Coverjs Logo
   actions:
     - theme: brand

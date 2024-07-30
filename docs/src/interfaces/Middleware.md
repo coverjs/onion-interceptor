@@ -15,7 +15,7 @@ Middleware 类型定义了一个中间件函数的签名。
 
 | 类型参数 | Value | 描述 |
 | :------ | :------ | :------ |
-| `Ctx` | [`Context`](../type-aliases/Context.md) | 上下文对象的类型。 |
+| `Ctx` | [`Context`](Context.md) | 上下文对象的类型。 |
 | `Res` | `any` | 中间件函数返回类型。 |
 
 > **Middleware**(`ctx`, `next`): `Promise`\<`Res`\>
@@ -33,4 +33,4 @@ Middleware 类型定义了一个中间件函数的签名。
 
 ## 查看源码
 
-[types.ts:157](https://github.com/coverjs/onion-interceptor/blob/d236aa63ca3a9e0fbece66c5ed18f82df60eea1f/packages/core/src/types.ts#L157)
+[types.ts:181](https://github.com/coverjs/onion-interceptor/blob/482006a5b14f2e170b14bf7df69cb7f1dffb81fb/packages/core/src/types.ts#L181)

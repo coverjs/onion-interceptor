@@ -1,12 +1,14 @@
-import type { Next } from 'onion-interceptor'
+import type { Next } from "onion-interceptor";
 
-import { operate } from 'onion-interceptor'
+import { operate } from "onion-interceptor";
 
 export const finalize = (cb: Function) =>
   operate(async (_, next: Next) => {
     try {
-      await next()
+      await next();
+    } catch (e) {
+      throw e;
     } finally {
-      cb()
+      cb();
     }
-  })
+  });
