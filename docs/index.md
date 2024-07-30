@@ -6,7 +6,7 @@ hero:
   name: "onion-interceptor"
   text: "洋葱拦截器"
   tagline: 通用网络请求拦截器工具
-  image: 
+  image:
     src: /onion.svg
     alt: Coverjs Logo
   actions:
@@ -27,3 +27,21 @@ features:
     details: 洋葱拦截器设计简洁，易于与现有项目集成。同时，它的扩展性允许开发者根据项目需求添加自定义的中间件，无论是日志记录、性能监控还是请求重试机制，都能够轻松实现，满足不同场景下的开发需求。
 ---
 
+## 光速上手
+
+```typescript
+import type { Context, Next } from "onion-interceptor";
+import { createInterceptor } from "onion-interceptor";
+import axios from "axios";
+
+const http = axios.create({
+  // ... some config
+});
+
+createInterceptor(http).use(async (ctx: Context, next: Next) => {
+  console.log("interceptor start", ctx);
+  await next();
+  console.log("interceptor end", ctx);
+});
+export default http;
+```

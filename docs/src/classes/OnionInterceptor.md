@@ -39,15 +39,16 @@ interceptor.use(async(ctx: Context, next: Next) => {
 
 ### new OnionInterceptor()
 
-> **new OnionInterceptor**(`instance`?): [`OnionInterceptor`](OnionInterceptor.md)
+> **new OnionInterceptor**(`instance`?, `rewriteMethods`?): [`OnionInterceptor`](OnionInterceptor.md)
 
 构造函数
 
 #### 参数
 
-| 参数名 | 类型 | 描述 |
-| :------ | :------ | :------ |
-| `instance`? | `AxiosInstanceLike`\<`any`\> | axios实例(可选) |
+| 参数名 | 类型 | 默认值 | 描述 |
+| :------ | :------ | :------ | :------ |
+| `instance`? | [`AxiosInstanceLike`](../interfaces/AxiosInstanceLike.md)\<`RequestConfig`, `RequestResponse`\> | `undefined` | axios实例(可选) |
+| `rewriteMethods`? | `boolean` | `true` | 是否重写 GET、POST等请求方法 - 封装 fetch 时建议传 false (可选) |
 
 #### 返回值类型
 
@@ -55,7 +56,7 @@ interceptor.use(async(ctx: Context, next: Next) => {
 
 #### 查看源码
 
-[OnionInterceptor.ts:42](https://github.com/coverjs/onion-interceptor/blob/39df853848f88c9b20849334a641a1e2329fe982/packages/core/src/OnionInterceptor.ts#L42)
+[OnionInterceptor.ts:43](https://github.com/coverjs/onion-interceptor/blob/387df229bd70097d41558280358ae6cae4483713/packages/core/src/OnionInterceptor.ts#L43)
 
 ## Methods
 
@@ -93,7 +94,7 @@ interceptor.handle(ctx, async(_ctx, next) => {
 
 #### 查看源码
 
-[OnionInterceptor.ts:111](https://github.com/coverjs/onion-interceptor/blob/39df853848f88c9b20849334a641a1e2329fe982/packages/core/src/OnionInterceptor.ts#L111)
+[OnionInterceptor.ts:113](https://github.com/coverjs/onion-interceptor/blob/387df229bd70097d41558280358ae6cae4483713/packages/core/src/OnionInterceptor.ts#L113)
 
 ***
 
@@ -141,4 +142,4 @@ interceptor.use(loadingMiddlewre, AuthMiddleware);
 
 #### 查看源码
 
-[OnionInterceptor.ts:82](https://github.com/coverjs/onion-interceptor/blob/39df853848f88c9b20849334a641a1e2329fe982/packages/core/src/OnionInterceptor.ts#L82)
+[OnionInterceptor.ts:84](https://github.com/coverjs/onion-interceptor/blob/387df229bd70097d41558280358ae6cae4483713/packages/core/src/OnionInterceptor.ts#L84)

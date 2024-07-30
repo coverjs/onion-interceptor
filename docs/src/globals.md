@@ -10,6 +10,7 @@
 
 ## 接口
 
+- [AxiosInstanceLike](interfaces/AxiosInstanceLike.md)
 - [Context](interfaces/Context.md)
 - [Middleware](interfaces/Middleware.md)
 - [Next](interfaces/Next.md)

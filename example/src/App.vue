@@ -1,13 +1,12 @@
 <script setup lang="ts">
-import { http } from './api/http'
-import { onMounted } from 'vue'
-
+import { http } from "./api/http";
+import { onMounted } from "vue";
 
 onMounted(() => {
-  http.get('/users').then((res) => {
-    console.log(res)
-  })
-})
+  http.get("/users").then((res) => {
+    console.log(res);
+  });
+});
 </script>
 
 <template>

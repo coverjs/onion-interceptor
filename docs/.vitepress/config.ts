@@ -11,7 +11,7 @@ export default defineConfig({
     // https://vitepress.dev/reference/default-theme-config
     logo: '/onion.svg',
     sidebar: {
-      '/src/README': [{ text: '快速上手', link: '/src/README' }],
+      '/src/README': [{ text: '快速开始', link: '/src/README' }],
       '/src/': navigation
     },
     nav: [

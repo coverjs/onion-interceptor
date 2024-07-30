@@ -38,8 +38,9 @@ export class OnionInterceptor {
   /**
    * 构造函数
    * @param instance axios实例(可选)
+   * @param rewriteMethods 是否重写 GET、POST等请求方法 - 封装 fetch 时建议传 false (可选)
    */
-  constructor(instance?: AxiosInstanceLike) {
+  constructor(instance?: AxiosInstanceLike, rewriteMethods: boolean = true) {
     headMap.set(
       this,
       new MiddlewareLinkNode(async (ctx, next) => {
@@ -48,7 +49,8 @@ export class OnionInterceptor {
       })
     ); // The handler function in the first node is used if use() is never used.
     tailMap.set(this, headMap.get(this) as MiddlewareLinkNode);
-    if (isAxiosInstanceLike(instance)) rewriteRequest(instance!, this);
+    if (isAxiosInstanceLike(instance))
+      rewriteRequest(instance!, this, rewriteMethods);
   }
 
   /**

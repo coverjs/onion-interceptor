@@ -22,8 +22,9 @@ Generate Operator 函数用于创建一个操作符。
 
 ## 示例
 
+[@onion-interceptor/pipes - npm (npmjs.com)](https://www.npmjs.com/package/@onion-interceptor/pipes) 该库中的 操作符就是基于 operate 封装的。
 ```typescript
-// 创建操作符用于 一些快捷操作 如 catchError 等
+// 创建操作符用于一些快捷操作 如 catchError 等
 const myMiddleware:Middleware = async (ctx, next) => {
   // do something
   await next();
@@ -35,4 +36,4 @@ const myOperation = operate(myMiddleware);
 
 ## 查看源码
 
-[methods.ts:152](https://github.com/coverjs/onion-interceptor/blob/39df853848f88c9b20849334a641a1e2329fe982/packages/core/src/methods.ts#L152)
+[methods.ts:160](https://github.com/coverjs/onion-interceptor/blob/387df229bd70097d41558280358ae6cae4483713/packages/core/src/methods.ts#L160)

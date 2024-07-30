@@ -86,19 +86,25 @@ export interface AxiosResponse<T = any> {
   request: XMLHttpRequest;
 }
 export interface AxiosPromise<T = any> extends Promise<AxiosResponse<T>> {}
+
+type RequestConfig = (AxiosRequestConfig | RequestInit) & {
+  [key: string]: any;
+};
+type RequestResponse = (AxiosResponse | Response) & { [key: string]: any };
+
 /**
  * AxiosInstanceLike 接口定义了一个类似 Axios 实例的结构。
  * 它包含 request 方法以及可选的 HTTP 方法快捷函数。
  */
-export interface AxiosInstanceLike<Cfg = any> {
+export interface AxiosInstanceLike<Cfg = RequestConfig, Res = RequestResponse> {
   /**
    * request 方法用于执行 HTTP 请求。
    * @param config - 请求配置。// 这里用 any 是方便 fetch 封装
    * @returns 返回一个 Promise 对象，代表请求的结果。
    */
-  request: (config: Cfg) => Promise<any>;
+  request: (...args: any[]) => Promise<Res>;
   /** defaults 属性存储实例的默认配置。 */
-  defaults?: AxiosRequestConfig | any;
+  defaults?: AxiosRequestConfig | Cfg | any;
 
   // 快捷 HTTP 方法的声明
   get?<T = any>(url: string, config?: AxiosRequestConfig): AxiosPromise<T>;
@@ -140,24 +146,6 @@ export interface AxiosInstanceLike<Cfg = any> {
   [key: string]: any;
 }
 
-/**
- * 类 axios 上下文 （ new OnionInterceptor() 时传入类 axios 示例时生效）
- */
-export interface AxiosLikeCtx {
-  /**
-   * 请求参数 调用 request 时候传入的 （只有一个config）
-   */
-  args?: AxiosRequestConfig[];
-  /**
-   * 默认配置 调用 axios.create 时候传入的配置
-   */
-  cfg?: AxiosRequestConfig;
-  /**
-   * 请求响应
-   */
-  res?: AxiosResponse;
-}
-
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /* -----------------------------------------------axios types end------------------------------------------- */
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -167,7 +155,22 @@ export interface AxiosLikeCtx {
 /**
  * 上下文类型
  */
-export interface Context extends AxiosLikeCtx {
+export interface Context {
+  /**
+   * 请求参数 调用 request 时候传入的 （只有一个config）
+   */
+  args?: RequestConfig[];
+  /**
+   * 默认配置 调用 axios.create 时候传入的配置
+   */
+  cfg?: RequestConfig;
+  /**
+   * 请求响应
+   */
+  res?: RequestResponse;
+  /**
+   * 上下文扩展
+   */
   [key: string]: any;
 }
 

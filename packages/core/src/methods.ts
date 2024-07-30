@@ -83,7 +83,8 @@ function destroyFreeNode(node: MiddlewareLinkNode, coreFn: Function) {
 
 export function rewriteRequest(
   instance: AxiosInstanceLike,
-  interceptor: OnionInterceptor
+  interceptor: OnionInterceptor,
+  rewriteMethods: boolean = true
 ) {
   const original = instance.request;
   instance.request = async function request<Data = any, T = any>() {
@@ -101,6 +102,12 @@ export function rewriteRequest(
           .finally(() => next())
     )) as AxiosResponse<Data> | T;
   };
+
+  if (!rewriteMethods) return;
+  rewriteInstanceMethods(instance)
+}
+
+function rewriteInstanceMethods(instance: AxiosInstanceLike) {
   (["delete", "get", "head", "options"] as Method[]).forEach((method) => {
     instance[method] = function (url: string, config?: AxiosRequestConfig) {
       return instance.request({ url, method, ...config });
@@ -138,8 +145,9 @@ export function rewriteRequest(
  * @returns 转换后的操作符。
  *
  * @example
+ * [@onion-interceptor/pipes - npm (npmjs.com)](https://www.npmjs.com/package/@onion-interceptor/pipes) 该库中的 操作符就是基于 operate 封装的。
  * ```typescript
- * // 创建操作符用于 一些快捷操作 如 catchError 等
+ * // 创建操作符用于一些快捷操作 如 catchError 等
  * const myMiddleware:Middleware = async (ctx, next) => {
  *   // do something
  *   await next();
