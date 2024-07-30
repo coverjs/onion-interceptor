@@ -15,8 +15,10 @@ import { OnionInterceptor } from "./OnionInterceptor";
  * ```typescript
  * import { createInterceptor } from "onion-interceptor";
  * import axios from "axios";
+ * 
  * const http = axios.create({...})
  * createInterceptor(http).use(...)
+ * ```
  */
 export function createInterceptor(instance?: AxiosInstanceLike) {
   return new OnionInterceptor(instance);
