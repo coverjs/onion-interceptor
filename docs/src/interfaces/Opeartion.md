@@ -26,7 +26,7 @@ Operation 接口扩展了 Middleware 类型，表示一个操作。
 
 ## 查看源码
 
-[types.ts:200](https://github.com/coverjs/onion-interceptor/blob/387df229bd70097d41558280358ae6cae4483713/packages/core/src/types.ts#L200)
+[types.ts:200](https://github.com/coverjs/onion-interceptor/blob/d48ad023f73534829e47c23c8616819619efd619/packages/core/src/types.ts#L200)
 
 ## Properties
 
@@ -36,4 +36,4 @@ Operation 接口扩展了 Middleware 类型，表示一个操作。
 
 #### 查看源码
 
-[types.ts:201](https://github.com/coverjs/onion-interceptor/blob/387df229bd70097d41558280358ae6cae4483713/packages/core/src/types.ts#L201)
+[types.ts:201](https://github.com/coverjs/onion-interceptor/blob/d48ad023f73534829e47c23c8616819619efd619/packages/core/src/types.ts#L201)

@@ -4,7 +4,7 @@
 
 # 函数: createInterceptor()
 
-> **createInterceptor**(`instance`?, `rewriteMethods`?): [`OnionInterceptor`](../classes/OnionInterceptor.md)
+> **createInterceptor**(`instance`?, `useAxios`?): [`OnionInterceptor`](../classes/OnionInterceptor.md)
 
 创建 OnionInterceptor实例
 
@@ -13,7 +13,7 @@
 | 参数名 | 类型 | 默认值 | 描述 |
 | :------ | :------ | :------ | :------ |
 | `instance`? | [`AxiosInstanceLike`](../interfaces/AxiosInstanceLike.md)\<`RequestConfig`, `RequestResponse`\> | `undefined` | 类Axios实例 |
-| `rewriteMethods`? | `boolean` | `true` | 是否重写 GET、POST等请求方法 - 封装 fetch 时建议传 false |
+| `useAxios`? | `boolean` | `true` | 是否使用的 Axios 实例 |
 
 ## 返回值类型
 
@@ -31,4 +31,4 @@ createInterceptor(http).use(...)
 
 ## 查看源码
 
-[index.ts:24](https://github.com/coverjs/onion-interceptor/blob/387df229bd70097d41558280358ae6cae4483713/packages/core/src/index.ts#L24)
+[index.ts:24](https://github.com/coverjs/onion-interceptor/blob/d48ad023f73534829e47c23c8616819619efd619/packages/core/src/index.ts#L24)

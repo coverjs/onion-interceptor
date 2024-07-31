@@ -18,5 +18,6 @@
 
 ## 函数
 
+- [createFetchInterceptor](functions/createFetchInterceptor.md)
 - [createInterceptor](functions/createInterceptor.md)
 - [operate](functions/operate.md)

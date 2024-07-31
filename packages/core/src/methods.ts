@@ -45,7 +45,7 @@ export function compose(
   const dispatch = (
     node: MiddlewareLinkNode,
     ...args: Middleware[]
-  ): Promise<void> => {
+  ): Promise<any> => {
     if (node.isNil()) return Promise.resolve();
     if (visitedNodes.has(node))
       return Promise.reject(new Error("next called multiple times"));
@@ -59,7 +59,7 @@ export function compose(
         new MiddlewareLinkNode(
           node.isHandleAs(coreFn) ? void 0 : (coreFn as Middleware)
         );
-      return Promise.resolve<void>(
+      return Promise.resolve<any>(
         opPipe
           ? compose(
               opPipe,
@@ -89,7 +89,7 @@ export function rewriteRequest(
   const original = instance.request;
   instance.request = async function request<Data = any, T = any>() {
     const args = Array.prototype.slice.call(arguments) as [AxiosRequestConfig];
-    const ctx: Context = { args, cfg: instance.defaults } as Context;
+    const ctx: Context = { args, cfg: instance.defaults };
     return (await interceptor.handle(
       ctx,
       async (_ctx: Context, next: Next) =>
@@ -104,7 +104,7 @@ export function rewriteRequest(
   };
 
   if (!rewriteMethods) return;
-  rewriteInstanceMethods(instance)
+  rewriteInstanceMethods(instance);
 }
 
 function rewriteInstanceMethods(instance: AxiosInstanceLike) {

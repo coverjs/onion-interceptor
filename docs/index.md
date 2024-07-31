@@ -11,7 +11,7 @@ hero:
     alt: Coverjs Logo
   actions:
     - theme: brand
-      text: 快速开始
+      text: 使用指南
       link: /src/README
 features:
   - icon: 🧅

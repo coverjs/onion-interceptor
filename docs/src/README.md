@@ -141,6 +141,8 @@ export async function loadingInterceptor(ctx: Context, next: Next) {
 
 ## fetch 封装示例
 
+推荐封装一个 AxiosInstanceLike 也就时类 Axios 的实例，用以下的方式 理论上不局限于 fetch 、axios （其他环境例如 小程序开发，只要 AxiosInstanceLike 接口定义即可使用洋葱拦截器）。
+
 ```typescript
 // fetch.ts
 import { createInterceptor, type AxiosInstanceLike } from "onion-interceptor";
@@ -167,7 +169,7 @@ const http = new XFetch({
 });
 
 // 将实例化后的 XFetch 实例传入 createInterceptor 并使用 use 方法添加拦截器
-// 第二个参数 false 表示不对传入实例上 get 、post 等请求方法重写 (默认为 true 即会重写，为了处理 AxiosInstance) 该参数只有在以一个参数传入 axios.create 结果时才建议传 true
+// 第二个参数 false 表示不是Axios示例（默认值为 true） 该参数只有在第一个参数传入 axios.create 结果时才建议传 true
 createInterceptor(http, false).use(...interceptors);
 
 export default http;
@@ -202,6 +204,20 @@ export async function errorInterceptor(ctx: Context, next: Next) {
 ```
 
 ![console 截图](https://cdn.jsdelivr.net/gh/EricWXY/PictureBed_0@master/202407301901748.png)
+
+### createFetchInterceptor 
+
+如果觉得写类 Axios 实例还是麻烦，也可以使用 createFetchInterceptor 函数来对fetch请求进行拦截。
+
+```typescript
+import { createFetchInterceptor } from "onion-interceptor";
+
+createFetchInterceptor(...interceptors);
+
+/// 在执行 createFetchInterceptor 之后，我们可以直接使用 fetch 请求，封装的拦截器中间件会自动生效。
+```
+
+> 注意： createFetchInterceptor 函数实现会污染 window 对象，所以不建议在复杂的项目中使用以避免不必要的影响
 
 ## 贡献
 

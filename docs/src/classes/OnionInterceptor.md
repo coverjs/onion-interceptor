@@ -39,7 +39,7 @@ interceptor.use(async(ctx: Context, next: Next) => {
 
 ### new OnionInterceptor()
 
-> **new OnionInterceptor**(`instance`?, `rewriteMethods`?): [`OnionInterceptor`](OnionInterceptor.md)
+> **new OnionInterceptor**(`instance`?, `useAxios`?): [`OnionInterceptor`](OnionInterceptor.md)
 
 构造函数
 
@@ -48,7 +48,7 @@ interceptor.use(async(ctx: Context, next: Next) => {
 | 参数名 | 类型 | 默认值 | 描述 |
 | :------ | :------ | :------ | :------ |
 | `instance`? | [`AxiosInstanceLike`](../interfaces/AxiosInstanceLike.md)\<`RequestConfig`, `RequestResponse`\> | `undefined` | axios实例(可选) |
-| `rewriteMethods`? | `boolean` | `true` | 是否重写 GET、POST等请求方法 - 封装 fetch 时建议传 false (可选) |
+| `useAxios`? | `boolean` | `true` | 是否使用的 Axios 实例 - 封装 fetch 时建议传 false (可选) |
 
 #### 返回值类型
 
@@ -56,15 +56,21 @@ interceptor.use(async(ctx: Context, next: Next) => {
 
 #### 查看源码
 
-[OnionInterceptor.ts:43](https://github.com/coverjs/onion-interceptor/blob/387df229bd70097d41558280358ae6cae4483713/packages/core/src/OnionInterceptor.ts#L43)
+[OnionInterceptor.ts:43](https://github.com/coverjs/onion-interceptor/blob/d48ad023f73534829e47c23c8616819619efd619/packages/core/src/OnionInterceptor.ts#L43)
 
 ## Methods
 
 ### handle()
 
-> **handle**(`ctx`, `coreFn`): `Promise`\<`void`\>
+> **handle**\<`Res`\>(`ctx`, `coreFn`): `Promise`\<`Res`\>
 
 handle 方法用于使用洋葱拦截器拦截目标函数(是的通用性大幅提高)。
+
+#### 类型参数
+
+| 类型参数 | Value |
+| :------ | :------ |
+| `Res` | `any` |
 
 #### 参数
 
@@ -75,7 +81,7 @@ handle 方法用于使用洋葱拦截器拦截目标函数(是的通用性大幅
 
 #### 返回值类型
 
-`Promise`\<`void`\>
+`Promise`\<`Res`\>
 
 一个 Promise，代表拦截处理的结果。
 
@@ -94,7 +100,7 @@ interceptor.handle(ctx, async(_ctx, next) => {
 
 #### 查看源码
 
-[OnionInterceptor.ts:113](https://github.com/coverjs/onion-interceptor/blob/387df229bd70097d41558280358ae6cae4483713/packages/core/src/OnionInterceptor.ts#L113)
+[OnionInterceptor.ts:113](https://github.com/coverjs/onion-interceptor/blob/d48ad023f73534829e47c23c8616819619efd619/packages/core/src/OnionInterceptor.ts#L113)
 
 ***
 
@@ -142,4 +148,4 @@ interceptor.use(loadingMiddlewre, AuthMiddleware);
 
 #### 查看源码
 
-[OnionInterceptor.ts:84](https://github.com/coverjs/onion-interceptor/blob/387df229bd70097d41558280358ae6cae4483713/packages/core/src/OnionInterceptor.ts#L84)
+[OnionInterceptor.ts:84](https://github.com/coverjs/onion-interceptor/blob/d48ad023f73534829e47c23c8616819619efd619/packages/core/src/OnionInterceptor.ts#L84)

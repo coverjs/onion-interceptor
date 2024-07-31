@@ -1,4 +1,7 @@
-import { createInterceptor, type AxiosInstanceLike } from "onion-interceptor";
+import {
+  createInterceptor,
+  type AxiosInstanceLike,
+} from "onion-interceptor";
 
 import { interceptors } from "../interceptor";
 import axios from "axios";
