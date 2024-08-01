@@ -21,7 +21,7 @@ import { OnionInterceptor } from "./OnionInterceptor";
 function pipeFromArgs(args: unknown[]) {
   const head = new MiddlewareLinkNode();
   let tail = head;
-  for (let item of args)
+  for (const item of args)
     if (isOperation(item)) {
       tail.setNext(new MiddlewareLinkNode(item));
       tail = tail.getNext() as MiddlewareLinkNode;
