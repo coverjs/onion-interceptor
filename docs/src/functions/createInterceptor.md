@@ -31,4 +31,4 @@ createInterceptor(http).use(...)
 
 ## 查看源码
 
-[index.ts:24](https://github.com/coverjs/onion-interceptor/blob/d48ad023f73534829e47c23c8616819619efd619/packages/core/src/index.ts#L24)
+[index.ts:24](https://github.com/coverjs/onion-interceptor/blob/63c6c8b676a8e435d2716a63054f57c037de5afd/packages/core/src/index.ts#L24)
