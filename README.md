@@ -35,7 +35,7 @@ yarn add onion-interceptor
 pnpm add onion-interceptor
 ```
 
-### 快速开始
+## 快速开始
 
 ```ts
 import type { Context, Next } from "onion-interceptor";
