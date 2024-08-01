@@ -88,6 +88,7 @@ export function rewriteRequest(
 ) {
   const original = instance.request;
   instance.request = async function request<Data = any, T = any>() {
+    // eslint-disable-next-line prefer-rest-params
     const args = Array.prototype.slice.call(arguments) as [AxiosRequestConfig];
     const ctx: Context = { args, cfg: instance.defaults };
     return (await interceptor.handle(

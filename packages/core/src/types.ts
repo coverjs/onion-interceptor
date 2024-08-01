@@ -85,6 +85,8 @@ export interface AxiosResponse<T = any> {
   config: AxiosRequestConfig;
   request: XMLHttpRequest;
 }
+
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface AxiosPromise<T = any> extends Promise<AxiosResponse<T>> {}
 
 type RequestConfig = (AxiosRequestConfig | RequestInit) & {

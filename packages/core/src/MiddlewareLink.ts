@@ -11,6 +11,7 @@ const handleMap: WeakMap<MiddlewareLinkNode, Middleware> = new WeakMap();
 export class MiddlewareLinkNode<Ctx extends Context = Context> {
   private [nextPKey]: MiddlewareLinkNode<Ctx> | null = null;
   constructor(handle?: Middleware) {
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     isFunction(handle) && handleMap.set(this, handle);
   }
 

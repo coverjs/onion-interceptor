@@ -28,6 +28,10 @@
         "section": "🐛 Bug Fixes | Bug 修复"
       },
       {
+        "type": "perf",
+        "section": "🚀 Performance Improvements | 优化"
+      },
+      {
         "type": "chore",
         "hidden": true
       },
@@ -42,10 +46,6 @@
       {
         "type": "refactor",
         "hidden": true
-      },
-      {
-        "type": "perf",
-        "section": "🚀 Performance Improvements | 优化"
       },
       {
         "type": "test",

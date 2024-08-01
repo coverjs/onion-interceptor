@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-catch */
 import type { Next } from "onion-interceptor";
 
 import { operate } from "onion-interceptor";
