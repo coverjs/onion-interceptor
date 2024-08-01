@@ -1,6 +1,9 @@
-<img width="240" style="text-align:center;" src="https://raw.githubusercontent.com/coverjs/.github/main/images202408011707691.png"/>
+<p align="center">
+  <img width="240" style="text-align:center;" src="https://raw.githubusercontent.com/coverjs/.github/main/images202408011707691.png"/>
+</p>
 
-# onion-interceptor
+<h1 align="center">OnionInterceptor</h1>
+<h4 align="center">灵活的洋葱模型 HTTP 请求拦截器</h4>
 
 **Onion Interceptor** 是一个用于 `javascript` HTTP 请求的拦截器工具库，它允许你使用洋葱模型拦截 HTTP 请求和响应, 灵感来于 `Koa` 和 `Angular Interceptor` 的洋葱模型.
 
