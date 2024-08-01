@@ -1,6 +1,6 @@
 {
   "name": "@onion-interceptor/pipes",
-  "version": "0.0.7-beta",
+  "version": "0.1.0",
   "type": "module",
   "description": "onion-interceptor pipes",
   "homepage": "https://coverjs.github.io/onion-interceptor/",
@@ -30,10 +30,10 @@
   "keywords": [],
   "author": "EricWXY",
   "peerDependencies": {
-    "onion-interceptor": "^0.0.7-beta"
+    "onion-interceptor": "^0.1.0"
   },
   "devDependencies": {
-    "onion-interceptor": "workspace:*"
+    "onion-interceptor": "^0.1.0"
   },
   "license": "ISC"
 }
