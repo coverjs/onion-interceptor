@@ -1,5 +1,6 @@
 import type { Middleware, Context, Next } from "./types";
-import { isFunction, isOperation } from "./is";
+
+import { isFunction, isOperation } from "./utils";
 
 const nextPKey = Symbol("nextP");
 const handleMap: WeakMap<MiddlewareLinkNode, Middleware> = new WeakMap();

@@ -22,9 +22,9 @@
 
 ```typescript
 import { createFetchInterceptor } from "onion-interceptor";
-import { interceptors } from  'path of interceptors' 
- 
-// 这里 interceptors 是一个中间件数组 
+import { interceptors } from  'path of interceptors'
+
+// 这里 interceptors 是一个中间件数组
 createFetchInterceptor(...interceptors)
 
 // 直接使用 fetch ,(会污染 全局 window.fetch , 复杂项目中 不建议使用)
@@ -34,4 +34,4 @@ fetch(...)
 
 ## 查看源码
 
-[index.ts:47](https://github.com/coverjs/onion-interceptor/blob/63c6c8b676a8e435d2716a63054f57c037de5afd/packages/core/src/index.ts#L47)
+[index.ts:47](https://github.com/coverjs/onion-interceptor/blob/87a6c5cc986300604182f401f081b47e89a260b5/packages/core/src/index.ts#L47)

@@ -8,10 +8,10 @@ import type {
   AxiosRequestConfig,
   AxiosResponse,
 } from "./types";
-import { isOperation, isFunction } from "./is";
-import { isOpeartionKey } from "./constants";
 import { MiddlewareLinkNode } from "./MiddlewareLink";
 import { OnionInterceptor } from "./OnionInterceptor";
+
+export const isOpeartionKey = Symbol("__is_Opeartion");
 
 /**
  * pipeFromArgs 函数从参数列表中获取操作符管道。
@@ -140,26 +140,18 @@ function rewriteInstanceMethods(instance: AxiosInstanceLike) {
   });
 }
 
+export const isFunction = (val: unknown): val is Function =>
+  typeof val === "function";
+
 /**
- * Generate Operator 函数用于创建一个操作符。
- * @param fn - 要转换成操作符的中间件函数。
- * @returns 转换后的操作符。
- *
- * @example
- * [@onion-interceptor/pipes - npm (npmjs.com)](https://www.npmjs.com/package/@onion-interceptor/pipes) 该库中的 操作符就是基于 operate 封装的。
- * ```typescript
- * // 创建操作符用于一些快捷操作 如 catchError 等
- * const myMiddleware:Middleware = async (ctx, next) => {
- *   // do something
- *   await next();
- *   // do something
- * };
- * const myOperation = operate(myMiddleware);
- *
- * ```
+ * Determines whether it is an operator.
+ * @param val
  */
-export function operate(fn: Middleware) {
-  if (!isFunction(fn)) throw new TypeError("operate must be a function!");
-  (fn as Opeartion)[isOpeartionKey] = true;
-  return fn as Opeartion;
-}
+export const isOperation = (val: unknown): val is Function & Opeartion =>
+  isFunction(val) && (val as Opeartion)[isOpeartionKey] === true;
+
+export const isNil = (val: unknown): val is null | undefined => val == null;
+
+export const isAxiosInstanceLike = (val: unknown): val is AxiosInstanceLike =>
+  !isNil((val as AxiosInstanceLike)?.request) &&
+  isFunction((val as AxiosInstanceLike)?.request);

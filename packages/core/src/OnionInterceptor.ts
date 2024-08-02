@@ -1,7 +1,13 @@
 import type { AxiosInstanceLike, Middleware, Context } from "./types";
+
 import { MiddlewareLinkNode } from "./MiddlewareLink";
-import { rewriteRequest, compose } from "./methods";
-import { isFunction, isAxiosInstanceLike, isNil } from "./is";
+import {
+  rewriteRequest,
+  compose,
+  isFunction,
+  isAxiosInstanceLike,
+  isNil,
+} from "./utils";
 
 const headMap: WeakMap<OnionInterceptor, MiddlewareLinkNode> = new WeakMap();
 const tailMap: WeakMap<OnionInterceptor, MiddlewareLinkNode> = new WeakMap();

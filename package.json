@@ -1,6 +1,7 @@
 {
   "name": "onion-interceptor",
-  "version": "0.0.1",
+  "version": "1.0.0",
+  "private": true,
   "license": "MIT",
   "type": "module",
   "scripts": {
@@ -10,9 +11,12 @@
     "docs:dev": "concurrently \"typedoc --watch\" \"vitepress dev docs\"",
     "docs:build": "typedoc && vitepress build docs",
     "docs:preview": "typedoc && vitepress preview docs",
+    "pipes:build": "pnpm --filter @onion-interceptor/pipes build",
     "typecheck": "tsc --noEmit",
     "lint": "eslint --ignore-pattern .gitignore .",
     "changed": "dotenv lerna version --conventional-commits --create-release github --yes",
+    "changed:patch": "dotenv lerna version patch --conventional-commits --create-release github --yes",
+    "changed:major": "dotenv lerna version major --conventional-commits --create-release github --yes",
     "release": "lerna publish from-package --yes"
   },
   "devDependencies": {

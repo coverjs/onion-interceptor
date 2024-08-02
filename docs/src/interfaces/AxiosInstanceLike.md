@@ -28,7 +28,7 @@ defaults 属性存储实例的默认配置。
 
 #### 查看源码
 
-[types.ts:109](https://github.com/coverjs/onion-interceptor/blob/63c6c8b676a8e435d2716a63054f57c037de5afd/packages/core/src/types.ts#L109)
+[types.ts:109](https://github.com/coverjs/onion-interceptor/blob/87a6c5cc986300604182f401f081b47e89a260b5/packages/core/src/types.ts#L109)
 
 ***
 
@@ -50,7 +50,7 @@ request 方法用于执行 HTTP 请求。
 
 #### 查看源码
 
-[types.ts:107](https://github.com/coverjs/onion-interceptor/blob/63c6c8b676a8e435d2716a63054f57c037de5afd/packages/core/src/types.ts#L107)
+[types.ts:107](https://github.com/coverjs/onion-interceptor/blob/87a6c5cc986300604182f401f081b47e89a260b5/packages/core/src/types.ts#L107)
 
 ## Methods
 
@@ -77,7 +77,7 @@ request 方法用于执行 HTTP 请求。
 
 #### 查看源码
 
-[types.ts:113](https://github.com/coverjs/onion-interceptor/blob/63c6c8b676a8e435d2716a63054f57c037de5afd/packages/core/src/types.ts#L113)
+[types.ts:113](https://github.com/coverjs/onion-interceptor/blob/87a6c5cc986300604182f401f081b47e89a260b5/packages/core/src/types.ts#L113)
 
 ***
 
@@ -104,7 +104,7 @@ request 方法用于执行 HTTP 请求。
 
 #### 查看源码
 
-[types.ts:112](https://github.com/coverjs/onion-interceptor/blob/63c6c8b676a8e435d2716a63054f57c037de5afd/packages/core/src/types.ts#L112)
+[types.ts:112](https://github.com/coverjs/onion-interceptor/blob/87a6c5cc986300604182f401f081b47e89a260b5/packages/core/src/types.ts#L112)
 
 ***
 
@@ -131,7 +131,7 @@ request 方法用于执行 HTTP 请求。
 
 #### 查看源码
 
-[types.ts:114](https://github.com/coverjs/onion-interceptor/blob/63c6c8b676a8e435d2716a63054f57c037de5afd/packages/core/src/types.ts#L114)
+[types.ts:114](https://github.com/coverjs/onion-interceptor/blob/87a6c5cc986300604182f401f081b47e89a260b5/packages/core/src/types.ts#L114)
 
 ***
 
@@ -158,7 +158,7 @@ request 方法用于执行 HTTP 请求。
 
 #### 查看源码
 
-[types.ts:115](https://github.com/coverjs/onion-interceptor/blob/63c6c8b676a8e435d2716a63054f57c037de5afd/packages/core/src/types.ts#L115)
+[types.ts:115](https://github.com/coverjs/onion-interceptor/blob/87a6c5cc986300604182f401f081b47e89a260b5/packages/core/src/types.ts#L115)
 
 ***
 
@@ -186,7 +186,7 @@ request 方法用于执行 HTTP 请求。
 
 #### 查看源码
 
-[types.ts:126](https://github.com/coverjs/onion-interceptor/blob/63c6c8b676a8e435d2716a63054f57c037de5afd/packages/core/src/types.ts#L126)
+[types.ts:126](https://github.com/coverjs/onion-interceptor/blob/87a6c5cc986300604182f401f081b47e89a260b5/packages/core/src/types.ts#L126)
 
 ***
 
@@ -214,7 +214,7 @@ request 方法用于执行 HTTP 请求。
 
 #### 查看源码
 
-[types.ts:143](https://github.com/coverjs/onion-interceptor/blob/63c6c8b676a8e435d2716a63054f57c037de5afd/packages/core/src/types.ts#L143)
+[types.ts:143](https://github.com/coverjs/onion-interceptor/blob/87a6c5cc986300604182f401f081b47e89a260b5/packages/core/src/types.ts#L143)
 
 ***
 
@@ -242,7 +242,7 @@ request 方法用于执行 HTTP 请求。
 
 #### 查看源码
 
-[types.ts:116](https://github.com/coverjs/onion-interceptor/blob/63c6c8b676a8e435d2716a63054f57c037de5afd/packages/core/src/types.ts#L116)
+[types.ts:116](https://github.com/coverjs/onion-interceptor/blob/87a6c5cc986300604182f401f081b47e89a260b5/packages/core/src/types.ts#L116)
 
 ***
 
@@ -270,7 +270,7 @@ request 方法用于执行 HTTP 请求。
 
 #### 查看源码
 
-[types.ts:133](https://github.com/coverjs/onion-interceptor/blob/63c6c8b676a8e435d2716a63054f57c037de5afd/packages/core/src/types.ts#L133)
+[types.ts:133](https://github.com/coverjs/onion-interceptor/blob/87a6c5cc986300604182f401f081b47e89a260b5/packages/core/src/types.ts#L133)
 
 ***
 
@@ -298,7 +298,7 @@ request 方法用于执行 HTTP 请求。
 
 #### 查看源码
 
-[types.ts:121](https://github.com/coverjs/onion-interceptor/blob/63c6c8b676a8e435d2716a63054f57c037de5afd/packages/core/src/types.ts#L121)
+[types.ts:121](https://github.com/coverjs/onion-interceptor/blob/87a6c5cc986300604182f401f081b47e89a260b5/packages/core/src/types.ts#L121)
 
 ***
 
@@ -326,4 +326,4 @@ request 方法用于执行 HTTP 请求。
 
 #### 查看源码
 
-[types.ts:138](https://github.com/coverjs/onion-interceptor/blob/63c6c8b676a8e435d2716a63054f57c037de5afd/packages/core/src/types.ts#L138)
+[types.ts:138](https://github.com/coverjs/onion-interceptor/blob/87a6c5cc986300604182f401f081b47e89a260b5/packages/core/src/types.ts#L138)

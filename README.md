@@ -5,14 +5,14 @@
 <h1 align="center">OnionInterceptor</h1>
 <h4 align="center">灵活的洋葱模型 HTTP 请求拦截器</h4>
 
-**Onion Interceptor** 是一个用于 `javascript` HTTP 请求的拦截器工具库，它允许你使用洋葱模型拦截 HTTP 请求和响应, 灵感来于 `Koa` 和 `Angular Interceptor` 的洋葱模型.
+**Onion Interceptor** 是一个用于 `javascript` HTTP 请求的拦截器工具库，它允许你使用洋葱模型拦截 HTTP 请求和响应, 灵感来于 `Koa` 洋葱模型和 `Angular Interceptor`.
 
-[查阅文档](coverjs.github.io/onion-interceptor/)
+[查阅文档](https://coverjs.github.io/onion-interceptor/)
 
 ## 特点
 
 - 跨平台且不受框架限制, 支持浏览器和 Node.js
-- 支持 axios、fetch 等 HTTP 客户端
+- 支持 axios、fetch 等 HTTP 请求方式
 - 针对 HTTP 请求和响应进行更灵活更自由的拦截
 
 ## 安装

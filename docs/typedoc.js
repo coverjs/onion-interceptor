@@ -1,7 +1,6 @@
 // doc/typedoc.js
 const TypeDoc = require('typedoc');
 const path = require('path');
-// const fs = require('fs');
 const json2md = require('json2md');
 const fs = require('fs-extra');
 // 根目录
