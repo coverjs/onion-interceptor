@@ -33,4 +33,4 @@ Middleware 类型定义了一个中间件函数的签名。
 
 ## 查看源码
 
-[types.ts:184](https://github.com/coverjs/onion-interceptor/blob/d48ad023f73534829e47c23c8616819619efd619/packages/core/src/types.ts#L184)
+[types.ts:186](https://github.com/coverjs/onion-interceptor/blob/63c6c8b676a8e435d2716a63054f57c037de5afd/packages/core/src/types.ts#L186)

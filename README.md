@@ -1,28 +1,58 @@
-# onion-interceptor
+<p align="center">
+  <img width="240" style="text-align:center;" src="https://raw.githubusercontent.com/coverjs/.github/main/images202408011707691.png"/>
+</p>
 
-`onion-interceptor` 是一个受 Koa 洋葱模型和 Angular Interceptor 启发的请求拦截器工具，它允许您以 Koa 中间件的形式为 axios、fetch 等 HTTP 客户端编写请求拦截器。
+<h1 align="center">OnionInterceptor</h1>
+<h4 align="center">灵活的洋葱模型 HTTP 请求拦截器</h4>
+
+**Onion Interceptor** 是一个用于 `javascript` HTTP 请求的拦截器工具库，它允许你使用洋葱模型拦截 HTTP 请求和响应, 灵感来于 `Koa` 和 `Angular Interceptor` 的洋葱模型.
+
+[查阅文档](coverjs.github.io/onion-interceptor/)
 
 ## 特点
 
-- 支持多种 HTTP 请求 API。
-- 灵活的洋葱模型拦截器，可以轻松添加、修改或移除拦截器。
-- 易于集成和使用。
+- 跨平台且不受框架限制, 支持浏览器和 Node.js
+- 支持 axios、fetch 等 HTTP 客户端
+- 针对 HTTP 请求和响应进行更灵活更自由的拦截
 
 ## 安装
 
-使用 npm 或 yarn 安装 `onion-interceptor` :
+使用 npm :
 
 ```bash
 npm install onion-interceptor
 ```
 
-或者
+使用 yarn:
 
 ```bash
 yarn add onion-interceptor
 ```
 
-## 使用方法
+使用 pnpm:
+
+```bash
+pnpm add onion-interceptor
+```
+
+## 快速开始
+
+```ts
+import type { Context, Next } from "onion-interceptor";
+import { createInterceptor } from "onion-interceptor";
+import axios from "axios";
+
+const http = axios.create({
+  // ... some config
+});
+
+createInterceptor(http).use(async (ctx: Context, next: Next) => {
+  console.log("interceptor start", ctx);
+  await next();
+  console.log("interceptor end", ctx);
+});
+export default http;
+```
 
 ### 初始化
 
@@ -201,10 +231,9 @@ export async function errorInterceptor(ctx: Context, next: Next) {
 
 ![console 截图](https://cdn.jsdelivr.net/gh/EricWXY/PictureBed_0@master/202407301901748.png)
 
-### createFetchInterceptor 
+### createFetchInterceptor
 
-如果觉得写类 Axios 实例还是麻烦，也可以使用 createFetchInterceptor 函数来对fetch请求进行拦截。
-
+如果觉得写类 Axios 实例还是麻烦，也可以使用 createFetchInterceptor 函数来对 fetch 请求进行拦截。
 
 ```typescript
 import { createFetchInterceptor } from "onion-interceptor";
