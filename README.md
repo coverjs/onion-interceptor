@@ -1,5 +1,5 @@
 <p align="center">
-  <img width="240" style="text-align:center;" src="https://raw.githubusercontent.com/coverjs/.github/main/images202408011707691.png"/>
+  <img width="240" style="text-align:center;" src="https://cdn.jsdelivr.net/gh/coverjs/.github@main/images202408011707691.png"/>
 </p>
 
 <h1 align="center">OnionInterceptor</h1>
@@ -91,7 +91,6 @@ export default http;
 ### 拦截器书写
 
 ```typescript
-/// 有函数和类两种写法
 
 import type { Next, Context, Middleware } from "onion-interceptor";
 
@@ -187,7 +186,7 @@ class XFetch implements AxiosInstanceLike<RequestInit, Response> {
   }
 }
 
-const http = new XFetch({
+const xFetch = new XFetch({
   baseURL: "https://api.github.com",
   headers: {
     "Content-Type": "application/json",
@@ -198,7 +197,7 @@ const http = new XFetch({
 // 第二个参数 false 表示不是Axios示例（默认值为 true） 该参数只有在第一个参数传入 axios.create 结果时才建议传 true
 createInterceptor(http, false).use(...interceptors);
 
-export default http;
+export default xFetch;
 ```
 
 对 fetch 请求的结果进行进一步处理,以下是 errorInterceptor.ts 的简单示例
