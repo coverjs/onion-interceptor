@@ -4,22 +4,28 @@
 
 ## 特点
 
-- 支持多种 HTTP 请求 API。
-- 灵活的洋葱模型拦截器，可以轻松添加、修改或移除拦截器。
-- 易于集成和使用。
+- 跨平台且不受框架限制, 支持浏览器和 Node.js
+- 支持 axios、fetch 等 HTTP 请求方式
+- 针对 HTTP 请求和响应进行更灵活更自由的拦截
 
 ## 安装
 
-使用 npm 或 yarn 安装 `onion-interceptor` :
+使用 npm :
 
 ```bash
 npm install onion-interceptor
 ```
 
-或者
+使用 yarn:
 
 ```bash
 yarn add onion-interceptor
+```
+
+使用 pnpm:
+
+```bash
+pnpm add onion-interceptor
 ```
 
 ## 使用方法
@@ -61,8 +67,6 @@ export default http;
 ### 拦截器书写
 
 ```typescript
-/// 有函数和类两种写法
-
 import type { Next, Context, Middleware } from "onion-interceptor";
 
 export async function authInterceptor(ctx: Context, next: Next) {
@@ -157,7 +161,7 @@ class XFetch implements AxiosInstanceLike<RequestInit, Response> {
   }
 }
 
-const http = new XFetch({
+const xFetch = new XFetch({
   baseURL: "https://api.github.com",
   headers: {
     "Content-Type": "application/json",
@@ -168,7 +172,7 @@ const http = new XFetch({
 // 第二个参数 false 表示不是Axios示例（默认值为 true） 该参数只有在第一个参数传入 axios.create 结果时才建议传 true
 createInterceptor(http, false).use(...interceptors);
 
-export default http;
+export default xFetch;
 ```
 
 对 fetch 请求的结果进行进一步处理,以下是 errorInterceptor.ts 的简单示例
@@ -201,10 +205,9 @@ export async function errorInterceptor(ctx: Context, next: Next) {
 
 ![console 截图](https://cdn.jsdelivr.net/gh/EricWXY/PictureBed_0@master/202407301901748.png)
 
-### createFetchInterceptor 
+### createFetchInterceptor
 
-如果觉得写类 Axios 实例还是麻烦，也可以使用 createFetchInterceptor 函数来对fetch请求进行拦截。
-
+如果觉得写类 Axios 实例还是麻烦，也可以使用 createFetchInterceptor 函数来对 fetch 请求进行拦截。
 
 ```typescript
 import { createFetchInterceptor } from "onion-interceptor";
