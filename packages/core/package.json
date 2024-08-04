@@ -26,7 +26,8 @@
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "vite build --config vite.config.ts",
-    "build:watch": "vite build --config vite.config.ts --watch"
+    "build:watch": "vite build --config vite.config.ts --watch",
+    "test":"vitest --coverage"
   },
   "keywords": [],
   "author": "EricWXY",
