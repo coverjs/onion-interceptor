@@ -7,7 +7,7 @@
 
 ![GitHub Release](https://img.shields.io/github/v/release/coverjs/onion-interceptor?logo=git&logoColor=white&color=red)
 ![NPM Downloads](https://img.shields.io/npm/dw/onion-interceptor?logo=npm&color=purple)
-![NPM Unpacked Size](https://img.shields.io/npm/unpacked-size/onion-interceptor?logo=hackthebox&logoColor=white&color=yellow) ![coverage](https://img.shields.io/badge/coverage-90.35%-blue?logo=vitest&color=green&logoColor=white) ![typescript](https://img.shields.io/badge/language-typescript-gree?logo=typescript&color=blue&logoColor=white) ![GitHub License](https://img.shields.io/github/license/coverjs/onion-interceptor?color=orange)
+![NPM Unpacked Size](https://img.shields.io/npm/unpacked-size/onion-interceptor?logo=GitLFS&logoColor=white&color=yellow) ![coverage](https://img.shields.io/badge/coverage-90.35%-blue?logo=vitest&color=green&logoColor=white) ![typescript](https://img.shields.io/badge/language-typescript-gree?logo=typescript&color=blue&logoColor=white) ![GitHub License](https://img.shields.io/github/license/coverjs/onion-interceptor?color=orange&logo=GoogleDocs&logoColor=white)
 ![GitHub last commit](https://img.shields.io/github/last-commit/coverjs/onion-interceptor?logo=github)
 
 **Onion Interceptor** 是一个用于 `javascript` HTTP 请求的拦截器工具库，它允许你使用洋葱模型拦截 HTTP 请求和响应, 灵感来于 `Koa` 洋葱模型和 `Angular Interceptor`.
