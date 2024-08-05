@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [0.1.1](https://github.com/coverjs/onion-interceptor/compare/v0.1.0...v0.1.1) (2024-08-05)
+
+### 🚀 Performance Improvements | 优化
+
+* 打包产物体积优化 ([43553aa](https://github.com/coverjs/onion-interceptor/commit/43553aad88bdc513359ef0f748c9d3a04201c0b9))by.@EricWXY
+
 ## 0.1.0 (2024-08-01)
 
 ### 🐛 Bug Fixes | Bug 修复
