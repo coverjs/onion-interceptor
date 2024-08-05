@@ -1,5 +1,5 @@
 {
-  "name": "onion-interceptor",
+  "name": "onion-root",
   "version": "1.0.0",
   "private": true,
   "license": "MIT",
@@ -27,6 +27,7 @@
     "@lerna-lite/version": "^3.7.1",
     "@onion-interceptor/pipes": "workspace:*",
     "@release-it/conventional-changelog": "^5.1.1",
+    "@rollup/plugin-terser": "^0.4.4",
     "@types/node": "^20.14.12",
     "@vitest/coverage-v8": "^2.0.0",
     "axios": "^1.7.2",
@@ -40,6 +41,7 @@
     "onion-interceptor": "workspace:*",
     "release-it": "^15.11.0",
     "rimraf": "^5.0.9",
+    "terser": "^5.31.3",
     "typedoc": "0.25.13",
     "typedoc-plugin-markdown": "4.0.3",
     "typescript": "5.4.5",
