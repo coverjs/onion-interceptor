@@ -11,15 +11,19 @@
   "bugs": {
     "url": "https://github.com/coverjs/onion-interceptor/issues"
   },
+  "main": "dist/index.cjs",
   "module": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
     "dist",
-    "README.md"
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE"
   ],
   "exports": {
     ".": {
       "import": "./dist/index.js",
+      "require": "./dist/index.cjs",
       "types": "./dist/index.d.ts"
     }
   },
@@ -27,9 +31,19 @@
     "prebuild": "rimraf dist",
     "build": "vite build --config vite.config.ts",
     "build:watch": "vite build --config vite.config.ts --watch",
-    "test":"vitest --coverage"
+    "test": "vitest --coverage"
   },
-  "keywords": [],
+  "keywords": [
+    "onion-interceptor",
+    "http-interceptor",
+    "middleware",
+    "axios",
+    "fetch",
+    "typescript",
+    "node",
+    "browser",
+    "request-handling"
+  ],
   "author": "EricWXY",
-  "license": "ISC"
+  "license": "MIT"
 }
