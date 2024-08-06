@@ -33,6 +33,8 @@ jobs:
       - name: Coveralls
         uses: coverallsapp/github-action@master
         with:
+          flag-name: run-${{ join(matrix.*, '-') }}
+          parallel: true
           github-token: ${{ secrets.GH_TOKEN }}
       
   build:
