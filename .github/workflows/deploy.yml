@@ -33,7 +33,7 @@ jobs:
       
       - name: generate coveralls.yml
         run: |
-          echo service_name: travis-pro \n repo_token: $COVERALLS_REPO_TOKEN > .coveralls.yml
+          echo 'service_name: travis-pro \n repo_token: $COVERALLS_REPO_TOKEN' > .coveralls.yml
 
       - name: Run tests
         run:  pnpm coverage
