@@ -31,7 +31,7 @@
     "prebuild": "rimraf dist",
     "build": "vite build --config vite.config.ts",
     "build:watch": "vite build --config vite.config.ts --watch",
-    "test": "vitest --coverage"
+    "test": "vitest --run --coverage"
   },
   "keywords": [
     "onion-interceptor",

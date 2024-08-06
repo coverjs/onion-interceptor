@@ -14,6 +14,7 @@
     "docs:preview": "typedoc && vitepress preview docs",
     "pipes:build": "pnpm --filter @onion-interceptor/pipes build",
     "typecheck": "tsc --noEmit",
+    "coverage":"pnpm test && cat ./packages/core/coverage/lcov.info | coveralls",
     "lint": "eslint --ignore-pattern .gitignore .",
     "changed": "dotenv lerna version --conventional-commits --create-release github --yes",
     "changed:patch": "dotenv lerna version patch --conventional-commits --create-release github --yes",
@@ -33,6 +34,7 @@
     "axios": "^1.7.2",
     "concurrently": "^8.2.2",
     "conventional-changelog-conventionalcommits": "^8.0.0",
+    "coveralls": "^3.1.1",
     "dotenv-cli": "^7.4.2",
     "eslint": "^9.8.0",
     "globals": "^15.8.0",
@@ -50,5 +52,8 @@
     "vite-plugin-dts": "4.0.0-beta.1",
     "vitepress": "^1.3.1",
     "vitest": "^2.0.0"
+  },
+  "coveralls": {
+    "repo_token": "zr4ywJD56s71hjhyknPAMaw3mCUS4zbWD"
   }
 }
