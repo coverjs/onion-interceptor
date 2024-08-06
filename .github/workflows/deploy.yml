@@ -25,7 +25,7 @@ jobs:
         run: pnpm install --no-frozen-lockfile
 
       - name: Run tests
-        run: pnpm run test
+        run: pnpm run coverage
 
       - name: Coveralls
         uses: coverallsapp/github-action@master
