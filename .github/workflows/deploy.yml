@@ -34,7 +34,9 @@ jobs:
         uses: coverallsapp/github-action@master
         with:
           github-token: ${{ secrets.GH_TOKEN }}
-          files: coverage/lcov.info
+          path-to-lcov: coverage/lcov.info
+          git-branch: main
+          debug: true
       
   build:
     name: Build docs
