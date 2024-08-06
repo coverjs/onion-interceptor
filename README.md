@@ -2,11 +2,11 @@
   <img width="240" style="text-align:center;" src="https://cdn.jsdelivr.net/gh/coverjs/.github@main/images202408011707691.png"/>
 </p>
 
-<h1 align="center">OnionInterceptor</h1>
+<h1 align="center">OnionInterceptor <a href="https://github.com/coverjs/onion-interceptor/actions?query=workflow%3A%22%22Test+and+deploy%22%22++"><img src="https://github.com/coverjs/onion-interceptor/workflows/Test%20and%20deploy/badge.svg" alt=""Test and deploy></a> </h1>
 <h4 align="center">灵活的洋葱模型 HTTP 请求拦截器</h4>
 
 ![GitHub Release](https://img.shields.io/github/v/release/coverjs/onion-interceptor?logo=git&logoColor=white&color=red)
-![NPM Downloads](https://img.shields.io/npm/dw/onion-interceptor?logo=npm&color=purple)
+![NPM Downloads](https://img.shields.io/npm/d18m/onion-interceptor?logo=npm&color=purple)
 ![NPM Unpacked Size](https://img.shields.io/npm/unpacked-size/onion-interceptor?logo=GitLFS&logoColor=white&color=yellow) ![coverage](https://img.shields.io/badge/coverage-90.35-blue?logo=vitest&color=green&logoColor=white) ![typescript](https://img.shields.io/badge/language-typescript-gree?logo=typescript&color=blue&logoColor=white) ![GitHub License](https://img.shields.io/github/license/coverjs/onion-interceptor?color=orange&logo=GoogleDocs&logoColor=white)
 ![GitHub last commit](https://img.shields.io/github/last-commit/coverjs/onion-interceptor?logo=github)
 
