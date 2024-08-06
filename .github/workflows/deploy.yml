@@ -30,7 +30,7 @@ jobs:
         run: pnpm install --no-frozen-lockfile
 
       - name: Run tests
-        run:  pnpm test && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
+        run:  pnpm coverage
 
       - name: Coveralls
         uses: coverallsapp/github-action@master
