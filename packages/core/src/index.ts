@@ -63,6 +63,7 @@ export function createFetchInterceptor(...intercepters: Middleware[]) {
             _ctx.res = res;
             return res as Response;
           })
+          .catch((err) => Promise.reject(err))
           .finally(() => next())
     );
   };

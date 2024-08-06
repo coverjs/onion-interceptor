@@ -2,7 +2,7 @@
   "compilerOptions": {
     "target": "ES2020",
     "useDefineForClassFields": true,
-    "module": "es2015",
+    "module": "esnext",
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "skipLibCheck": true,
     "moduleResolution": "node",
@@ -24,9 +24,10 @@
     "allowSyntheticDefaultImports": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
+
+    "types": ["node", "vitest", "vitest/importMeta"],
     "declarationDir": "dist/types",
-    "outDir": "dist/lib",
-    "typeRoots": ["node_modules/@types"]
+    "outDir": "dist/lib"
   },
-  "include": ["docs/**/*.ts", "packages/**/*.ts", "env.d.ts"]
+  "include": ["docs/**/*.ts", "packages/**/*.ts", "vite-env.d.ts"]
 }

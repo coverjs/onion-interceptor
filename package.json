@@ -37,6 +37,7 @@
     "eslint": "^9.8.0",
     "globals": "^15.8.0",
     "jsdom": "^22.1.0",
+    "msw": "^2.3.5",
     "oh-my-live2d": "^0.16.1",
     "onion-interceptor": "workspace:*",
     "release-it": "^15.11.0",
