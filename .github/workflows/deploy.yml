@@ -32,6 +32,7 @@ jobs:
       - name: generate coverage config
         run: |
           echo "repo_token: ${{ secrets.COVERALLS_REPO_TOKEN }}" > .coveralls.yml
+        run: cat .coveralls.yml
 
       - name: Run tests
         run:  pnpm coverage
@@ -39,9 +40,8 @@ jobs:
       - name: Coveralls
         uses: coverallsapp/github-action@master
         with:
-          repo-token: ${{ secrets.COVERALLS_REPO_TOKEN }}
-          parallel: true
           github-token: ${{ secrets.GH_TOKEN }}
+          files: coverage/lcov.info
       
   build:
     name: Build docs
