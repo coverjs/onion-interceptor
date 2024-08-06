@@ -2,13 +2,14 @@
   <img width="240" style="text-align:center;" src="https://cdn.jsdelivr.net/gh/coverjs/.github@main/images202408011707691.png"/>
 </p>
 
-<h1 align="center">OnionInterceptor <a href="https://github.com/coverjs/onion-interceptor/actions?query=workflow%3A%22%22Test+and+deploy%22%22++"><img src="https://github.com/coverjs/onion-interceptor/workflows/Test%20and%20deploy/badge.svg" alt=""Test and deploy></a> </h1>
+<h1 align="center">OnionInterceptor </h1>
 <h4 align="center">灵活的洋葱模型 HTTP 请求拦截器</h4>
 
-![GitHub Release](https://img.shields.io/github/v/release/coverjs/onion-interceptor?logo=git&logoColor=white&color=red)
-![NPM Downloads](https://img.shields.io/npm/d18m/onion-interceptor?logo=npm&color=orange)
-![NPM Unpacked Size](https://img.shields.io/npm/unpacked-size/onion-interceptor?logo=GitLFS&logoColor=white&color=yellow) ![coverage](https://img.shields.io/badge/coverage-90.35-blue?logo=vitest&color=green&logoColor=white) 
-![GitHub last commit](https://img.shields.io/github/last-commit/coverjs/onion-interceptor?logo=github&color=blue)
+<a href="https://github.com/coverjs/onion-interceptor/actions?query=workflow%3A%22%22Test+and+deploy%22%22++"><img src="https://github.com/coverjs/onion-interceptor/workflows/Test%20and%20deploy/badge.svg" alt="test and deploy"></a> 
+<a href="https://github.com/coverjs/onion-interceptor/releases"><img src="https://img.shields.io/github/v/release/coverjs/onion-interceptor?logo=git&logoColor=white&color=red" alt="npm downloads"></a> 
+<a href="https://www.npmjs.com/package/onion-interceptor"><img src="https://img.shields.io/npm/d18m/onion-interceptor?logo=npm&color=orange" alt="npm downloads"></a> 
+<a href="https://www.npmjs.com/package/onion-interceptor"><img src="https://img.shields.io/npm/unpacked-size/onion-interceptor?logo=GitLFS&logoColor=white&color=yellow" alt="npm unpacked size"></a> 
+<a href="https://app.codecov.io/github/EricWXY/onion-interceptor"><img src="https://img.shields.io/codecov/c/github/ericwxy/onion-interceptor/main.svg?logo=vitest&color=green&logoColor=white" alt="coverage"></a>
 
 **Onion Interceptor** 是一个用于 `javascript` HTTP 请求的拦截器工具库，它允许你使用洋葱模型拦截 HTTP 请求和响应, 灵感来于 `Koa` 洋葱模型和 `Angular Interceptor`.
 
