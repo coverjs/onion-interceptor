@@ -29,6 +29,9 @@ jobs:
       - name: Install dependencies
         run: pnpm install --no-frozen-lockfile
 
+      - name: generate coverage config
+        run: cat repo_token: ${{ secrets.COVERALLS_REPO_TOKEN }} > .coveralls.yml
+
       - name: Run tests
         run:  pnpm coverage
 
