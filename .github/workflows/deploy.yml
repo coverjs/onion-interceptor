@@ -7,6 +7,9 @@ on:
       
   workflow_dispatch:
 
+env:
+  COVERALLS_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
+
 jobs:
   test:
     name: Run tests
@@ -25,7 +28,7 @@ jobs:
         run: pnpm install --no-frozen-lockfile
 
       - name: Run tests
-        run: pnpm run coverage
+        run:  pnpm test && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js --repo-token=$COVERALLS_TOKEN
 
       - name: Coveralls
         uses: coverallsapp/github-action@master
