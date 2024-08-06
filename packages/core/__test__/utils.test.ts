@@ -6,10 +6,12 @@ import {
   isAxiosInstanceLike,
   isOpeartionKey,
   rewriteRequest,
+  compose,
 } from "../src/utils"; // 根据实际路径调整导入
 import { createInterceptor } from "../src";
+import { MiddlewareLinkNode } from "../src/MiddlewareLink";
 
-import type { AxiosInstanceLike } from "../src/types";
+import type { AxiosInstanceLike, Context, Next } from "../src/types";
 
 const mockMiddleware = () => {};
 const mockOperation = () => {};
@@ -82,5 +84,80 @@ describe("utils", () => {
       rewriteRequest(mockAxiosInstance, interceptor);
       expect(mockAxiosInstance.request).not.toBeUndefined();
     });
+  });
+
+  describe("compose", () => {
+    it("should compose middlewares", async () => {
+      const fn1 = async (ctx: Context, next: Next) => {
+        ctx.data = "fn1";
+        await next();
+      };
+      const fn2 = async (ctx: Context, next: Next) => {
+        ctx.data += "fn2";
+        return next();
+      };
+      const root = new MiddlewareLinkNode(fn1);
+      root.setNext(new MiddlewareLinkNode(fn2));
+      compose(root, {}, async (ctx: Context, next) => {
+        ctx.data += "fn3";
+        await next();
+        expect(ctx.data).toBe("fn1fn2fn3");
+      });
+    });
+    it("should throw error when coreFn is error", async () => {
+      const errs: Error[] = [];
+      const fn1 = async (ctx: Context, next: Next) => {
+        ctx.data = "fn1";
+        await next();
+      };
+      const fn2 = async (ctx: Context, next: Next) => {
+        ctx.data += "fn2";
+        await next();
+      };
+      const root = new MiddlewareLinkNode(fn1);
+      root.setNext(new MiddlewareLinkNode(fn2));
+      (async () => {
+        try {
+          await compose(root, {}, async (ctx: Context, next: Next) => {
+            ctx.data += "fn3";
+            await next();
+            return Promise.reject("error");
+          });
+        } catch (error: any) {
+          errs.push(error);
+        } finally {
+          expect(errs.length).toBe(1);
+        }
+      })();
+    });
+  });
+  it("should throw error when next called multiple times", async () => {
+    const errs: Error[] = [];
+    const fn1 = async (ctx: Context, next: Next) => {
+      ctx.data = "fn1";
+      await next();
+    };
+    const fn2 = async (ctx: Context, next: Next) => {
+      ctx.data += "fn2";
+      await next();
+    };
+    // 环形链
+    const root = new MiddlewareLinkNode(fn1);
+    const node1 = new MiddlewareLinkNode(fn2);
+    root.setNext(node1);
+    node1.setNext(root);
+    (async () => {
+      try {
+        await compose(root, {}, async (ctx: Context, next: Next) => {
+          ctx.data += "fn3";
+          await next();
+        });
+      } catch (error: any) {
+        errs.push(error);
+        expect(error).toEqual(new Error("next called multiple times"));
+      } finally {
+        expect(errs.length).toBe(1);
+      }
+    })();
   });
 });

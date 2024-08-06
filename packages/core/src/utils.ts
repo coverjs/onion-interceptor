@@ -53,24 +53,16 @@ export function compose(
 
     const opPipe = pipeFromArgs(args);
 
-    try {
-      const nextNode: MiddlewareLinkNode =
-        node.getNext() ??
-        new MiddlewareLinkNode(
-          node.isHandleAs(coreFn) ? void 0 : (coreFn as Middleware)
-        );
-      return Promise.resolve<any>(
-        opPipe
-          ? compose(
-              opPipe,
-              ctx,
-              node.bind(ctx, dispatch.bind(void 0, nextNode))
-            )
-          : node.call(ctx, dispatch.bind(void 0, nextNode))
-      ).finally(destroyFreeNode.bind(void 0, node, coreFn));
-    } catch (err) {
-      return Promise.reject(err);
-    }
+    const nextNode: MiddlewareLinkNode =
+      node.getNext() ??
+      new MiddlewareLinkNode(
+        node.isHandleAs(coreFn) ? void 0 : (coreFn as Middleware)
+      );
+    return Promise.resolve<any>(
+      opPipe
+        ? compose(opPipe, ctx, node.bind(ctx, dispatch.bind(void 0, nextNode)))
+        : node.call(ctx, dispatch.bind(void 0, nextNode))
+    ).finally(destroyFreeNode.bind(void 0, node, coreFn));
   };
 
   return dispatch(root);
@@ -100,6 +92,7 @@ export function rewriteRequest(
             _ctx.res = res;
             return res as T | PromiseLike<T>;
           })
+          .catch((err) => Promise.reject(err))
           .finally(() => next())
     )) as AxiosResponse<Data> | T;
   };
