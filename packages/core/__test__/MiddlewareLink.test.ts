@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from "vitest";
-import { MiddlewareLinkNode } from "../src/MiddlewareLink"; // 根据实际路径调整导入
+import { MiddlewareLinkNode } from "../src/MiddlewareLink";
 
 import type { Middleware } from "../src/types";
 
@@ -23,7 +23,6 @@ describe("MiddlewareLinkNode", () => {
 
   it("should handle null as next node", () => {
     const node = new MiddlewareLinkNode();
-    // node.setNext(null);
     expect(node.hasNext()).toBeFalsy();
   });
 

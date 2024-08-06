@@ -7,11 +7,11 @@ import {
   isOpeartionKey,
   rewriteRequest,
   compose,
-} from "../src/utils"; // 根据实际路径调整导入
+} from "../src/utils";
 import { createInterceptor } from "../src";
 import { MiddlewareLinkNode } from "../src/MiddlewareLink";
 
-import type { AxiosInstanceLike, Context, Next } from "../src/types";
+import type { Context, Next } from "../src/types";
 
 const mockMiddleware = () => {};
 const mockOperation = () => {};
@@ -63,26 +63,11 @@ describe("utils", () => {
 
   describe("rewriteRequest", () => {
     it("should rewrite the request method of an AxiosInstanceLike object", () => {
-      const API_URL = "https://api.github.com/" as const;
-      class MockAxiosInstance implements AxiosInstanceLike {
-        defaults = {
-          baseURL: API_URL,
-          headers: { "Content-Type": "application/json" },
-        };
-
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        async request(..._args: any[]): Promise<any> {
-          return {
-            ok: true,
-            data: "mocked data",
-          };
-        }
-      }
-
-      const http = new MockAxiosInstance();
-      const interceptor = createInterceptor(http);
+      const interceptor = createInterceptor();
       rewriteRequest(mockAxiosInstance, interceptor);
-      expect(mockAxiosInstance.request).not.toBeUndefined();
+      expect(mockAxiosInstance.request).toBeDefined();
+      expect((mockAxiosInstance as any).put).toBeDefined();
+      expect((mockAxiosInstance as any).postForm).toBeDefined();
     });
   });
 
@@ -121,10 +106,11 @@ describe("utils", () => {
           await compose(root, {}, async (ctx: Context, next: Next) => {
             ctx.data += "fn3";
             await next();
-            return Promise.reject("error");
+            return Promise.reject(new Error("error"));
           });
         } catch (error: any) {
           errs.push(error);
+          expect(error).toEqual(new Error("error"));
         } finally {
           expect(errs.length).toBe(1);
         }

@@ -1,5 +1,10 @@
 import { describe, it, expect, beforeAll, afterAll, afterEach } from "vitest";
-import { createInterceptor, createFetchInterceptor, operate } from "../src";
+import {
+  createInterceptor,
+  createFetchInterceptor,
+  operate,
+  OnionInterceptor,
+} from "../src";
 import { setupServer } from "msw/node";
 import { http, HttpResponse } from "msw";
 import axios from "axios";
@@ -63,17 +68,13 @@ describe("index.ts", () => {
   });
 
   it("should create an interceptor when argument is axios instance", async () => {
+    const base = "http://create.an.com/" as const;
     server.use(
-      http.get(API_URL + "users", () =>
-        HttpResponse.json({ data: "mocked data" })
-      ),
-      http.all(API_URL + "users", () =>
-        HttpResponse.json({ data: "mocked data" })
-      )
+      http.all(base + "users", () => HttpResponse.json({ data: "mocked data" }))
     );
 
     const instance = axios.create({
-      baseURL: API_URL,
+      baseURL: base,
       headers: {
         "Content-Type": "application/json",
       },
@@ -134,9 +135,8 @@ describe("index.ts", () => {
   });
 
   it("createFetchInterceptor should add interceptor to fetch", async () => {
-    server.use(
-      http.get(API_URL, () => HttpResponse.json({ data: "mock data" }))
-    );
+    const base = "http://createFetchInterceptor.com/" as const;
+    server.use(http.get(base, () => HttpResponse.json({ data: "mock data" })));
     const order: string[] = [];
     createFetchInterceptor(async (_, next) => {
       order.push("interceptor start");
@@ -144,14 +144,13 @@ describe("index.ts", () => {
       order.push("interceptor end");
     });
 
-    await fetch(API_URL);
+    await fetch(base);
     expect(!!order.length).toEqual(true);
   });
 
   it("should create a pipe with operate", async () => {
-    server.use(
-      http.get(API_URL, () => HttpResponse.json({ data: "mock data" }))
-    );
+    const base = "http://operate.com/" as const;
+    server.use(http.get(base, () => HttpResponse.json({ data: "mock data" })));
     const order: string[] = [];
     const finalize = (cb: Function) =>
       operate(async (_, next) => {
@@ -169,9 +168,11 @@ describe("index.ts", () => {
       order.push("interceptor start");
       await next(finalize(() => order.push("interceptor end")));
     };
-
-    createFetchInterceptor(mockLoaidngInterceptor);
-    await fetch(API_URL);
+    const instance = axios.create({
+      baseURL: base,
+    });
+    createInterceptor(instance).use(mockLoaidngInterceptor);
+    await instance.get("");
     expect(order).toEqual(["interceptor start", "interceptor end"]);
   });
 
@@ -193,12 +194,80 @@ describe("index.ts", () => {
   });
 
   it("should work when interceptors is empty", async () => {
-    server.use(
-      http.get(API_URL, () => HttpResponse.json({ data: "mock data" }))
+    const base = "http://interceptors.empty.com/" as const;
+    server.use(http.get(base, () => HttpResponse.json({ data: "mock data" })));
+    const instance = axios.create({ baseURL: base });
+    createInterceptor(instance);
+    instance.get("").then((res) => {
+      expect(res.data).toBeTruthy();
+    });
+  });
+});
+
+describe("OnionInterceptor", () => {
+  it("should handle result in link head", async () => {
+    const mockAuthInterceptor: Middleware = async (_, next) => {
+      await next();
+    };
+    const mockLoadingInterceptor: Middleware = async (_, next) => {
+      await next();
+    };
+
+    const mockErrorInterceptor: Middleware = async (ctx, next) => {
+      await next();
+      return ctx.res?.data;
+    };
+
+    const mockErrorInterceptor2: Middleware = async (_, next) => {
+      await next();
+    };
+    const mockErrorInterceptor3: Middleware = async (ctx, next) => {
+      await next();
+      ctx.res = void 0;
+    };
+
+    const instance = new MockAxiosInstance();
+    const interceptor = new OnionInterceptor(instance, false);
+
+    interceptor.use(
+      mockErrorInterceptor,
+      mockAuthInterceptor,
+      mockLoadingInterceptor
     );
-    createFetchInterceptor();
-    fetch(API_URL, { method: "GET" }).then((res) => {
-      expect(res.status).toBeTruthy();
+
+    // 外层返回处理后的数据
+    instance.request({ url: "/users", method: "get" }).then((res) => {
+      expect(res).toBe("mocked data");
+    });
+
+    const instance2 = new MockAxiosInstance();
+    const interceptor2 = new OnionInterceptor(instance2, false);
+    interceptor2.use(
+      mockErrorInterceptor2,
+      mockAuthInterceptor,
+      mockLoadingInterceptor
+    );
+
+    // 外层不做任何处理 且 ctx.res 存在
+    instance2.request({ url: "/users", method: "get" }).then((res) => {
+      expect(res).toEqual({ data: "mocked data", ok: true });
+    });
+
+    const instance3 = new MockAxiosInstance();
+    const interceptor3 = new OnionInterceptor(instance3);
+    interceptor3.use(
+      mockErrorInterceptor3,
+      mockAuthInterceptor,
+      mockLoadingInterceptor
+    );
+
+    const arg = { url: "/users", method: "get" };
+    // 外层返回 nil ctx.res 不存在
+    (instance3 as any).get("/users").then((res) => {
+      expect(res).toEqual({
+        args: [arg],
+        cfg: instance3.defaults,
+      });
     });
   });
 });
