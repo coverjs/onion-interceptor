@@ -18,6 +18,7 @@ jobs:
           COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
         run: |
           echo "COVERALLS_REPO_TOKEN=$COVERALLS_REPO_TOKEN" >> $GITHUB_ENV
+        
       - name: Checkout repo
         uses: actions/checkout@v3
 
@@ -30,14 +31,9 @@ jobs:
       - name: Install dependencies
         run: pnpm install --no-frozen-lockfile
       
-      - name: Debug repo-token
+      - name: generate coveralls.yml
         run: |
-          echo repo_token: zr4ywJD56s71hjhyknPAMaw3mCUS4zbWD > .coveralls.yml
-      
-      - name: Debug repo-token
-        run: cat .coveralls.yml
-      
-
+          echo repo_token: $COVERALLS_REPO_TOKEN > .coveralls.yml
 
       - name: Run tests
         run:  pnpm coverage
@@ -48,6 +44,7 @@ jobs:
           github-token: ${{ secrets.GH_TOKEN }}
           path-to-lcov: coverage/lcov.info
           git-branch: main
+          fail-on-error: false
           debug: true
       
   build:
