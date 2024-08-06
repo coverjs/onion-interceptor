@@ -31,7 +31,13 @@ jobs:
         run: pnpm install --no-frozen-lockfile
       
       - name: Debug repo-token
-        run: echo $COVERALLS_REPO_TOKEN
+        run: |
+          echo repo_token: zr4ywJD56s71hjhyknPAMaw3mCUS4zbWD > .coveralls.yml
+      
+      - name: Debug repo-token
+        run: cat .coveralls.yml
+      
+
 
       - name: Run tests
         run:  pnpm coverage
