@@ -14,7 +14,7 @@
     "docs:preview": "typedoc && vitepress preview docs",
     "pipes:build": "pnpm --filter @onion-interceptor/pipes build",
     "typecheck": "tsc --noEmit",
-    "coverage":"pnpm test && cat packages/core/coverage/lcov.info | node ./node_modules/coveralls/bin/coveralls.js",
+    "coverage":"pnpm test && cat packages/core/coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
     "lint": "eslint --ignore-pattern .gitignore .",
     "changed": "dotenv lerna version --conventional-commits --create-release github --yes",
     "changed:patch": "dotenv lerna version patch --conventional-commits --create-release github --yes",
