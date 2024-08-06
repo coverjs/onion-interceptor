@@ -30,7 +30,6 @@ jobs:
       - name: Coveralls
         uses: coverallsapp/github-action@master
         with:
-          file: ./packages/core/coverage/lcov.info
           github-token: ${{ secrets.GH_TOKEN }}
       
   build:
