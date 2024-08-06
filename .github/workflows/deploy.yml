@@ -7,14 +7,17 @@ on:
       
   workflow_dispatch:
 
-env:
-  COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
 
 jobs:
   test:
     name: Run tests
     runs-on: ubuntu-latest
     steps:
+      - name: Set environment variable from secret
+        env:
+          COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
+        run: |
+          echo "COVERALLS_REPO_TOKEN=$COVERALLS_REPO_TOKEN" >> $GITHUB_ENV
       - name: Checkout repo
         uses: actions/checkout@v3
 
@@ -29,7 +32,6 @@ jobs:
       
       - name: Debug repo-token
         run: cat .coveralls.yml
-        
 
       - name: Run tests
         run:  pnpm coverage
