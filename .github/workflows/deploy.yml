@@ -9,44 +9,52 @@ on:
 
 
 jobs:
-  test:
-    name: Run tests
-    runs-on: ubuntu-latest
+    test:
+    name: Node ${{ matrix.node }} on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      fail-fast: false
+      matrix:
+        node: [17, 18]
+        os: [ubuntu-latest, windows-latest]
+
     steps:
-      - name: Set environment variable from secret
-        env:
-          COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
-        run: |
-          echo "COVERALLS_REPO_TOKEN=$COVERALLS_REPO_TOKEN" >> $GITHUB_ENV
-        
+      
       - name: Checkout repo
         uses: actions/checkout@v3
 
       - name: Setup Node
         uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node }}
 
       - name: Install pnpm
         run: npm install -g pnpm
 
       - name: Install dependencies
         run: pnpm install --no-frozen-lockfile
-      
-      - name: generate coveralls.yml
-        run: |
-          echo service_name: travis-pro \n repo_token: $COVERALLS_REPO_TOKEN > .coveralls.yml
 
       - name: Run tests
-        run:  pnpm coverage
+        run: pnpm test
 
       - name: Coveralls
         uses: coverallsapp/github-action@master
         with:
           github-token: ${{ secrets.GH_TOKEN }}
-          path-to-lcov: coverage/lcov.info
-          git-branch: main
-          fail-on-error: false
-          debug: true
-      
+          flag-name: ${{matrix.os}}-node-${{ matrix.node }}
+          parallel: true
+
+  finish:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Coveralls Finished
+        uses: coverallsapp/github-action@master
+        with:
+          github-token: ${{ secrets.GH_TOKEN }}
+          parallel-finished: true 
+
   build:
     name: Build docs
     runs-on: ubuntu-latest
