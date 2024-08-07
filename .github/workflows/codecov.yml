@@ -2,6 +2,8 @@ name: Generate Code Coverage
 
 on:
   workflow_dispatch:
+  schedule:
+    - cron: '0 0,12 * * *'
 
 jobs:
   test:
@@ -19,10 +21,10 @@ jobs:
 
       - name: Install dependencies
         run: pnpm install --no-frozen-lockfile
-      
+
       - name: Run tests
-        run:  pnpm test
-      
+        run: pnpm test
+
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v4.0.1
         with:
