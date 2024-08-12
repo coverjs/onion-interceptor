@@ -9,7 +9,7 @@
 <a href="https://github.com/coverjs/onion-interceptor/releases"><img src="https://img.shields.io/github/v/release/coverjs/onion-interceptor?logo=git&logoColor=white&color=red" alt="npm downloads"></a> 
 <a href="https://www.npmjs.com/package/onion-interceptor"><img src="https://img.shields.io/npm/d18m/onion-interceptor?logo=npm&color=orange" alt="npm downloads"></a> 
 <a href="https://www.npmjs.com/package/onion-interceptor"><img src="https://img.shields.io/npm/unpacked-size/onion-interceptor?logo=GitLFS&logoColor=white&color=yellow" alt="npm unpacked size"></a> 
-<a href="https://app.codecov.io/github/EricWXY/onion-interceptor"><img src="https://img.shields.io/codecov/c/github/ericwxy/onion-interceptor/main.svg?logo=vitest&color=green&logoColor=white" alt="coverage"></a>
+<a href="https://app.codecov.io/github/EricWXY/onion-interceptor"><img src="https://img.shields.io/codecov/c/github/ericwxy/onion-interceptor/main.svg?logo=vitest&logoColor=white" alt="coverage"></a>
 
 **Onion Interceptor** 是一个用于 `javascript` HTTP 请求的拦截器工具库，它允许你使用洋葱模型拦截 HTTP 请求和响应, 灵感来于 `Koa` 洋葱模型和 `Angular Interceptor`.
 
