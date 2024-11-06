@@ -15,12 +15,13 @@
     "pipes:build": "pnpm --filter @onion-interceptor/pipes build",
     "typecheck": "tsc --noEmit",
     "lint": "eslint --ignore-pattern .gitignore .",
-    "changed": "dotenv --env-file=.env.local lerna version --conventional-commits --create-release github --yes",
-    "changed:patch": "dotenv --env-file=.env.local lerna version patch --conventional-commits --create-release github --yes",
-    "changed:major": "dotenv --env-file=.env.local lerna version major --conventional-commits --create-release github --yes",
+    "changed": "dotenvx --env-file=.env.local lerna version --conventional-commits --create-release github --yes",
+    "changed:patch": "dotenvx --env-file=.env.local lerna version patch --conventional-commits --create-release github --yes",
+    "changed:major": "dotenvx --env-file=.env.local lerna version major --conventional-commits --create-release github --yes",
     "release": "lerna publish from-package --yes"
   },
   "devDependencies": {
+    "@dotenvx/dotenvx": "^1.22.0",
     "@eslint/js": "^9.8.0",
     "@lerna-lite/cli": "^3.7.1",
     "@lerna-lite/publish": "^3.7.1",
