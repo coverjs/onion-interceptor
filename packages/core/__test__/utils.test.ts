@@ -69,6 +69,20 @@ describe("utils", () => {
       expect((mockAxiosInstance as any).put).toBeDefined();
       expect((mockAxiosInstance as any).postForm).toBeDefined();
     });
+    it("should rewrite the ctx.res when coreFn is error", () => {
+      const interceptor = createInterceptor();
+
+      rewriteRequest(mockAxiosInstance, interceptor);
+      interceptor.use(async (ctx, next) => {
+        try {
+          await next();
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        } catch (_) {
+          expect(ctx.res).toBeDefined();
+        }
+      });
+      mockAxiosInstance.get("/");
+    });
   });
 
   describe("compose", () => {

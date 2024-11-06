@@ -92,7 +92,10 @@ export function rewriteRequest(
             _ctx.res = res;
             return res as T | PromiseLike<T>;
           })
-          .catch((err) => Promise.reject(err))
+          .catch((err) => {
+            _ctx.res = err?.response ?? err;
+            return Promise.reject(err);
+          })
           .finally(() => next())
     )) as AxiosResponse<Data> | T;
   };
