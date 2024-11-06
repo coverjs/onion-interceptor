@@ -1,8 +1,10 @@
 {
   "$schema": "node_modules/@lerna-lite/cli/schemas/lerna-schema.json",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "npmClient": "pnpm",
-  "packages": ["packages/*"],
+  "packages": [
+    "packages/*"
+  ],
   "command": {
     "version": {
       "conventionalCommits": true,
@@ -50,7 +52,9 @@
         "hidden": true
       }
     ],
-    "issuePrefixes": ["#"],
+    "issuePrefixes": [
+      "#"
+    ],
     "commitUrlFormat": "{{host}}/{{owner}}/{{repository}}/commit/{{hash}}",
     "compareUrlFormat": "{{host}}/{{owner}}/{{repository}}/compare/{{previousTag}}...{{currentTag}}",
     "userUrlFormat": "{{host}}/{{user}}"

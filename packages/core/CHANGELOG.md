@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [1.0.4](https://github.com/coverjs/onion-interceptor/compare/v1.0.1...v1.0.4) (2024-11-06)
+
+### ✨ Features | 新功能
+
+* rewrite ctx.res when request is error ([9eba74b](https://github.com/coverjs/onion-interceptor/commit/9eba74bdab964703e3f43f10add7c785804d0168))by.@EricWXY
+
 ### [1.0.1](https://github.com/coverjs/onion-interceptor/compare/v1.0.0...v1.0.1) (2024-08-12)
 
 **Note:** Version bump only for package onion-interceptor
