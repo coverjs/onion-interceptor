@@ -15,9 +15,9 @@
     "pipes:build": "pnpm --filter @onion-interceptor/pipes build",
     "typecheck": "tsc --noEmit",
     "lint": "eslint --ignore-pattern .gitignore .",
-    "changed": "dotenv lerna version --conventional-commits --create-release github --yes",
-    "changed:patch": "dotenv lerna version patch --conventional-commits --create-release github --yes",
-    "changed:major": "dotenv lerna version major --conventional-commits --create-release github --yes",
+    "changed": "dotenv --env-file=.env.local lerna version --conventional-commits --create-release github --yes",
+    "changed:patch": "dotenv --env-file=.env.local lerna version patch --conventional-commits --create-release github --yes",
+    "changed:major": "dotenv --env-file=.env.local lerna version major --conventional-commits --create-release github --yes",
     "release": "lerna publish from-package --yes"
   },
   "devDependencies": {
