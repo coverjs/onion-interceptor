@@ -47,8 +47,5 @@
   "peerDependencies": {
     "onion-interceptor": "^1.0.1"
   },
-  "devDependencies": {
-    "onion-interceptor": "^1.0.1"
-  },
   "license": "MIT"
 }
